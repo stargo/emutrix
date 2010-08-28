@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/action">
+        <file alias="mute">mute.png</file>
+        <file alias="setup">device.png</file>
+        <file alias="session">session.png</file>
+        <file alias="panic">panic.png</file>
+        <file alias="link">link.png</file>
+    </qresource>
+    <qresource prefix="/emutrix">
+        <file alias="icon">device.png</file>
+    </qresource>
+</RCC>
