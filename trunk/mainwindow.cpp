@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QErrorMessage>
+#include <QDebug>
 #include "sanealsa.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -8,16 +9,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     // Create a new element_value object, use thorugh this class to write to ALSA mixer
     assert(!snd_ctl_elem_value_malloc(&value));
+    qDebug("Setting up UI...");
     // Qt creator magic
     ui->setupUi(this);
+    QComboBox * cardsBox = this->findChild<QComboBox*>("card");
     // Hide "setup" (that is, extended settings, frame)
     this->findChild<QWidget*>("setupWidget")->setVisible(false);
     // Look for soundcards
-    QComboBox * cardsBox = this->findChild<QComboBox*>("card");
+    qDebug("Checking soundcards...");
     int i = 0;
     char * name;
     do {
         assert(!snd_card_get_name(i, &name));
+        qDebug() << "Found soundcard #" << i << ": " << name;
         if (QString(name).startsWith(QLatin1String("E-mu 1010"))) // Simple check, may not be enough to see if card is compatible
             cardsBox->addItem(QString().number(i) + " - " + name, i); // I only have one card, so haven't seen if this works
     } while (snd_card_next(&i));
@@ -29,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
     cardsBox->setCurrentIndex(0); // Calls code to initialize first card.
 
+    qDebug("Setting start defaults...");
     // Set "sane" values, mostly to elements not controllable from within the program
     for (int i = 0; sanealsa_0[i] != ""; i++)
         writeStereoInt(sanealsa_0[i], 0);
@@ -41,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    // Clean up.
+    qDebug("Cleaning up...");
     snd_ctl_elem_value_free(value);
     if (hctl)
       snd_hctl_free(hctl);
@@ -50,6 +55,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::showError(const QString & msg)
 {
+      qDebug() << "Error: " << msg;
       QErrorMessage * err = new QErrorMessage(this);
       err->showMessage(msg);
 }
@@ -62,11 +68,13 @@ void MainWindow::on_panic_pressed()
 
 void MainWindow::on_card_currentIndexChanged(int index)
 {
+    qDebug() << "Selecting card #" << index;
     // ALSA control handles
     snd_ctl_t * ctl;
     if (hctl)
       snd_hctl_free(hctl);
     // Initialize card
+    qDebug("Opening card...");
     QString name = QString("hw:") + QString().number(index);
     if (snd_ctl_open(&ctl, name.toLatin1().data(), 0))
     {
@@ -74,6 +82,7 @@ void MainWindow::on_card_currentIndexChanged(int index)
         return;
     }
     assert(!snd_hctl_open_ctl(&hctl, ctl));
+    qDebug("Loading card elements...");
     assert(!snd_hctl_load(hctl));
     // Populate elements map to make stuff easier in the future
     elements.clear();
@@ -81,10 +90,12 @@ void MainWindow::on_card_currentIndexChanged(int index)
       el != snd_hctl_last_elem(hctl);
       el = snd_hctl_elem_next(el))
         elements.insert(snd_hctl_elem_get_name(el), el);
+    qDebug() << elements.size() << " elements loaded.";
 }
 
 void MainWindow::writeValue(const QString &el)
 {
+        qDebug() << "Writing to "<< el << " ALSA element.";
         assert(elements.contains(el));
         assert(snd_hctl_elem_write(elements.find(el).value(), value) >= 0);
 }
