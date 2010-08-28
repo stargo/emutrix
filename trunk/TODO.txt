@@ -1,12 +1,20 @@
+v0.1:
 * Read initial ALSA element values
 * Callbacks to react to outside changes
-* Set sane defaults at start
+v0.2:
 * "Link" feature (L and R channels go together)
 * View settings (hiding unavailable channels)
-* Fix input Pads
+v0.3:
+* Useful panic feature (temporarely mute all channels)
+v0.4:
 * Session managment (storage of element values)
 * Tray icon
-* Useful panic feature (temporarely mute all channels)
+v0.5:
+* Stabilizing
+
+v1.0/unknown:
+* Fix input Pads
 * Nicer icons (that make sense)
 
+constant:
 * Document
