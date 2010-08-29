@@ -12,9 +12,10 @@ v0.4:
 v0.5:
 * Stabilizing
 
-v1.0/unknown:
+v0.6-v1.0:
 * Fix input Pads
 * Nicer icons (that make sense)
+* Fancier GUI stuff (Tooltips, dB displays, etc.)
 
 constant:
 * Document
