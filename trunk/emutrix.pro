@@ -5,9 +5,10 @@ TARGET = emutrix
 VERSION = 0.1
 TEMPLATE = app
 SOURCES += main.cpp \
-    mainwindow.cpp
-HEADERS += mainwindow.h \
-    sanealsa.h
+    mainwindow.cpp \
+    mainwindow_slots.cpp
+HEADERS += sanealsa.h \
+    mainwindow.h
 FORMS += mainwindow.ui
 RESOURCES += emutrix.qrc
 LIBS += -lasound
