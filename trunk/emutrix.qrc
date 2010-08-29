@@ -7,6 +7,6 @@
         <file alias="link">link.png</file>
     </qresource>
     <qresource prefix="/emutrix">
-        <file alias="icon">device.png</file>
+        <file alias="icon">emutrix.png</file>
     </qresource>
 </RCC>
