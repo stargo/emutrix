@@ -11,5 +11,5 @@ HEADERS += mainwindow.h \
 FORMS += mainwindow.ui
 RESOURCES += emutrix.qrc
 LIBS += -lasound
-OTHER_FILES += TODO.txt
+OTHER_FILES += TODO
 DEFINES += APPLICATION_NAME=\\\"$(TARGET)\\\"
