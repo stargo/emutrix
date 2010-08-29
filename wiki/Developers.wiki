@@ -4,10 +4,10 @@
 = Hardware & Drivers =
   * AudigyMixer
   * emu10k1jack
-  * [http://emutrix.googlecode.com/files/HOG63.PS | FX8010 dsp chip]
-  * [http://emutrix.googlecode.com/files/m2049.pdf | EMU10K1 processor]
+  * [http://emutrix.googlecode.com/files/HOG63.PS  FX8010 dsp chip]
+  * [http://emutrix.googlecode.com/files/m2049.pdf  EMU10K1 processor]
 
 = Software & Libraries =
-  * [http://www.alsa-project.org/alsa-doc/alsa-lib/group___control.html | ALSA lib control interface]
-  * [http://doc.trolltech.com/ | Qt Documentation ]
-  * [http://www.nongnu.org/lash/lash-manual.html | LASH Manual ]
+  * [http://www.alsa-project.org/alsa-doc/alsa-lib/group___control.html  ALSA lib control interface]
+  * [http://doc.trolltech.com/  Qt Documentation ]
+  * [http://www.nongnu.org/lash/lash-manual.html  LASH Manual ]
