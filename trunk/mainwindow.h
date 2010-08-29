@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QMainWindow>
+#include <QTimer>
 #include "ui_setup.h"
 #include "alsa/asoundlib.h"
 
@@ -17,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QTimer * callbackTimer;
 
 private:
     Ui::MainWindow *ui;
@@ -25,6 +27,7 @@ private:
     /// ALSA element value reused in this class for all writes and reads
     snd_ctl_elem_value_t * value;
     QMap<QString, snd_hctl_elem_t *> elements;
+
     /// Displays error message
     void showError(const QString &);
     /// Writes ALSA elements consisting of one or two integer values ("faders")
@@ -37,6 +40,13 @@ private:
     void matrixWriteEnum(const QString & e, int i);
     /// Writes whatever is in the value private member to ALSA
     void writeValue(const QString &el);
+
+    /// Callback functions for alsa
+    void setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb);
+    /// Master change
+    static int alsaMasterChanged(snd_hctl_elem_t *elem, unsigned int mask);
+
+    void timerEvent(QTimerEvent *);
 
 private slots:
     /// Should set visible connectors
