@@ -42,17 +42,24 @@ MainWindow::MainWindow(QWidget *parent)
     for (int i = 0; sanealsa_false[i] != ""; i++)
         writeBool(sanealsa_false[i], false);
 
+    qDebug("Registering callbacks with ALSA");
+    assert(!elements.empty());
+    // Setup ALSA callbacks
+    setAlsaCallback("Master Playback Volume", (snd_hctl_elem_callback_t)&MainWindow::alsaMasterChanged);
+    startTimer(0);
 }
 
 MainWindow::~MainWindow()
 {
     qDebug("Cleaning up...");
+    delete  callbackTimer;
     snd_ctl_elem_value_free(value);
     if (hctl)
       snd_hctl_free(hctl);
     delete ui;
 }
 
+////////// ERROR HANDLING
 void MainWindow::showError(const QString & msg)
 {
       qDebug() << "Error: " << msg;
@@ -60,39 +67,31 @@ void MainWindow::showError(const QString & msg)
       err->showMessage(msg);
 }
 
-void MainWindow::on_panic_pressed()
+//// RANDOM HELPER FUNCTIONS
+void MainWindow::setButtonGroupVisible(const QButtonGroup * bg, bool visible)
 {
-    // TODO: Basic implementation. I want the Panic button to silence all channels in the future.
-    this->findChild<QSlider*>("master")->setValue(0);
+    /*for (QList<QWidget*>::iterator it = bg->buttons().begin();
+        it != bg->buttons().end(); ++it)
+        (*it)->setVisible(visible);*/
 }
 
-void MainWindow::on_card_currentIndexChanged(int index)
+void MainWindow::timerEvent(QTimerEvent *)
 {
-    qDebug() << "Selecting card #" << index;
-    // ALSA control handles
-    snd_ctl_t * ctl;
-    if (hctl)
-      snd_hctl_free(hctl);
-    // Initialize card
-    qDebug("Opening card...");
-    QString name = QString("hw:") + QString().number(index);
-    if (snd_ctl_open(&ctl, name.toLatin1().data(), 0))
-    {
-        showError(tr("Oops. Couldn't access sound card."));
-        return;
-    }
-    assert(!snd_hctl_open_ctl(&hctl, ctl));
-    qDebug("Loading card elements...");
-    assert(!snd_hctl_load(hctl));
-    // Populate elements map to make stuff easier in the future
-    elements.clear();
-    for (snd_hctl_elem_t * el = snd_hctl_first_elem(hctl);
-      el != snd_hctl_last_elem(hctl);
-      el = snd_hctl_elem_next(el))
-        elements.insert(snd_hctl_elem_get_name(el), el);
-    qDebug() << elements.size() << " elements loaded.";
+    // qDebug("Timer click!");
+    // Handle ALSA callbacks.
+    if (snd_hctl_wait(hctl, 10))
+        snd_hctl_handle_events(hctl);
 }
 
+void MainWindow::setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb)
+{
+    qDebug() << "Setting up " << eln << " callback...";
+    snd_hctl_elem_t * el = elements.find(eln).value();
+    snd_hctl_elem_set_callback_private(el, this);
+    snd_hctl_elem_set_callback(el, cb);
+}
+
+///// GENERIC ALSA WRITERS
 void MainWindow::writeValue(const QString &el)
 {
         qDebug() << "Writing to "<< el << " ALSA element.";
@@ -106,9 +105,73 @@ void MainWindow::writeStereoInt(const QString & el, int v)
     and of course all those pesky Multichannel Routing/Volume thingies, with witch we don't bother right now. Mono faders
     work with this, too. */
     //TODO check if the element is the right type
+    qDebug() << "Going to write stereo faders " << el << " to " << v;
     snd_ctl_elem_value_set_integer(value, 0, v);
     snd_ctl_elem_value_set_integer(value, 1, v);
     writeValue(el);
+}
+
+// Set or unsets generic alsa switches
+void MainWindow::writeBool(QString s, bool a)
+{
+    snd_ctl_elem_value_set_boolean(value, 0, a);
+    writeValue(s);
+}
+
+void MainWindow::matrixWriteEnum(const QString & e, int i)
+{
+    // Translate QButtonGroup indices to alsa enumeration indices. Let's only hope both are constant across environments.
+    int alsai = -(i+2);
+    // Write them and cross fingers.
+    snd_ctl_elem_value_set_enumerated(value, 0, alsai);
+    writeValue(e);
+}
+
+////// ALSA CALLBACKS
+
+int MainWindow::alsaMasterChanged(snd_hctl_elem_t * elem, unsigned int mask)
+{
+    qDebug("Master Volume changed outside.");
+    assert(mask == SND_CTL_EVENT_MASK_VALUE);
+    MainWindow * w = (MainWindow * )snd_hctl_elem_get_callback_private(elem);
+    assert(w);
+    snd_hctl_elem_read(elem, w->value);
+    int value = snd_ctl_elem_value_get_integer(w->value, 0);
+    qDebug() << "Changed to " << value;
+    w->ui->master->setValue(value);
+    return 0;
+}
+
+//// GENERAL SIGNALS
+void MainWindow::on_panic_pressed()
+{
+    // TODO: Basic implementation. I want the Panic button to silence all channels in the future.
+    this->findChild<QSlider*>("master")->setValue(0);
+}
+
+void MainWindow::on_card_currentIndexChanged(int index)
+{
+    qDebug() << "Selecting card #" << index;
+    // ALSA control handles
+    if (hctl)
+      snd_hctl_free(hctl);
+    // Initialize card
+    qDebug("Opening card...");
+    QString name = QString("hw:") + QString().number(index);
+    if (snd_hctl_open(&hctl, name.toLatin1().data(), SND_CTL_NONBLOCK))
+    {
+        showError(tr("Oops. Couldn't access sound card."));
+        return;
+    }
+    qDebug("Loading card elements...");
+    assert(!snd_hctl_load(hctl));
+    // Populate elements map to make stuff easier in the future
+    elements.clear();
+    for (snd_hctl_elem_t * el = snd_hctl_first_elem(hctl);
+      el != snd_hctl_last_elem(hctl);
+      el = snd_hctl_elem_next(el))
+        elements.insert(snd_hctl_elem_get_name(el), el);
+    qDebug() << elements.size() << " elements loaded.";
 }
 
 void MainWindow::on_master_valueChanged(int v)
@@ -123,13 +186,7 @@ void MainWindow::on_rate_currentIndexChanged(int index)
     writeValue("Clock Internal Rate");
 }
 
-// Set or unsets generic alsa switches
-void MainWindow::writeBool(QString s, bool a)
-{
-    snd_ctl_elem_value_set_boolean(value, 0, a);
-    writeValue(s);
-}
-
+//// PAD SIGNALS
 // Output Pad switches, labeled 14dB, when I think it's actually 12 (+4dBu/-10dBV)
 void MainWindow::on_dacpad_toggled(bool checked)
 {
@@ -177,8 +234,7 @@ void MainWindow::on_d3padin_toggled(bool checked)
     writeBool("DAC3 Audio Dock 14dB PAD Capture Switch", checked);
 }
 
-
-
+///// VIEW SIGNALS
 //TODO Hide unnecessary channels when user clicks on the appropiate checkboxes
 void MainWindow::on_con0202_toggled(bool checked)
 {
@@ -188,22 +244,7 @@ void MainWindow::on_con0202_toggled(bool checked)
         setButtonGroupVisible(*it, checked);*/
 }
 
-void MainWindow::setButtonGroupVisible(const QButtonGroup * bg, bool visible)
-{
-    /*for (QList<QWidget*>::iterator it = bg->buttons().begin();
-        it != bg->buttons().end(); ++it)
-        (*it)->setVisible(visible);*/
-}
-
-void MainWindow::matrixWriteEnum(const QString & e, int i)
-{
-    // Translate QButtonGroup indices to alsa enumeration indices. Let's only hope both are constant across environments.
-    int alsai = -(i+2);
-    // Write them and cross fingers.
-    snd_ctl_elem_value_set_enumerated(value, 0, alsai);
-    writeValue(e);
-}
-
+/////// MATRIX SIGNALS
 // Ugly way to do this. These are signaled by QButtonGroups of each column of the matrix, representing one card output.
 // The stuff below is simple, but does the "real work".
 // TODO implement stereo linking.
