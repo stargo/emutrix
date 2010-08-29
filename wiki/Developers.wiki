@@ -3,7 +3,7 @@
 
 = Hardware & Drivers =
   * AudigyMixer
-  * emu10k1jack
+  * Emu10K1Jack
   * [http://emutrix.googlecode.com/files/HOG63.PS  FX8010 dsp chip]
   * [http://emutrix.googlecode.com/files/m2049.pdf  EMU10K1 processor]
 
