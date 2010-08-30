@@ -12,5 +12,13 @@ HEADERS += src/sanealsa.h \
 FORMS += res/mainwindow.ui
 RESOURCES += res/emutrix.qrc
 LIBS += -lasound
-OTHER_FILES +=
+DISTFILES += Makefile
+    README \
+    COPYING \
+    res/panic.png \
+    res/session.png \
+    res/link.png \
+    res/device.png \
+    res/emutrix.png \
+    res/mute.png
 DEFINES += APPLICATION_NAME=\\\"$(TARGET)\\\"
