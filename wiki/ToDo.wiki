@@ -1,6 +1,6 @@
 #labels Developers
 = Goals for versions =
-==Pre-release
+==Pre-release==
   * ~~GUI~~
   * ~~Basic routing~~
   * ~~Master level~~
