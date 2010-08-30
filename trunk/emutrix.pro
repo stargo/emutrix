@@ -12,5 +12,5 @@ HEADERS += sanealsa.h \
 FORMS += mainwindow.ui
 RESOURCES += emutrix.qrc
 LIBS += -lasound
-OTHER_FILES += TODO
+OTHER_FILES += 
 DEFINES += APPLICATION_NAME=\\\"$(TARGET)\\\"
