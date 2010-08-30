@@ -22,7 +22,7 @@ namespace Ui
     */
 class MainWindow : public QMainWindow
 {
-    // This macro provides for Qt meta object handling and permits defining slots and signals
+    /// This macro provides for Qt meta object handling and permits defining slots and signals
     Q_OBJECT
 
 public:

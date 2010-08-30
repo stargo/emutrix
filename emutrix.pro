@@ -12,7 +12,7 @@ HEADERS += src/sanealsa.h \
 FORMS += res/mainwindow.ui
 RESOURCES += res/emutrix.qrc
 LIBS += -lasound
-DISTFILES += Makefile
+DISTFILES += Makefile \
     README \
     COPYING \
     res/panic.png \

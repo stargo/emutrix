@@ -52,7 +52,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     qDebug("Cleaning up...");
-    delete  callbackTimer;
     snd_ctl_elem_value_free(value);
     if (hctl)
       snd_hctl_free(hctl);
@@ -68,7 +67,7 @@ void MainWindow::showError(const QString & msg)
 }
 
 //// RANDOM HELPER FUNCTIONS
-void MainWindow::setButtonGroupVisible(const QButtonGroup * bg, bool visible)
+void MainWindow::setButtonGroupVisible(const QButtonGroup *, bool)
 {
     /*for (QList<QWidget*>::iterator it = bg->buttons().begin();
         it != bg->buttons().end(); ++it)
@@ -112,7 +111,7 @@ void MainWindow::writeStereoInt(const QString & el, int v)
 }
 
 // Set or unsets generic alsa switches
-void MainWindow::writeBool(QString s, bool a)
+void MainWindow::writeBool(const QString & s, bool a)
 {
     snd_ctl_elem_value_set_boolean(value, 0, a);
     writeValue(s);
