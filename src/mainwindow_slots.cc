@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QDebug>
+#include <QSlider>
 
 //// GENERAL SIGNALS
 void MainWindow::on_panic_pressed()
