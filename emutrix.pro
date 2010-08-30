@@ -4,13 +4,13 @@
 TARGET = emutrix
 VERSION = 0.1
 TEMPLATE = app
-SOURCES += main.cpp \
-    mainwindow.cpp \
-    mainwindow_slots.cpp
-HEADERS += sanealsa.h \
-    mainwindow.h
-FORMS += mainwindow.ui
-RESOURCES += emutrix.qrc
+SOURCES += src/main.cpp \
+    src/mainwindow.cpp \
+    src/mainwindow_slots.cpp
+HEADERS += src/sanealsa.h \
+    src/mainwindow.h
+FORMS += res/mainwindow.ui
+RESOURCES += res/emutrix.qrc
 LIBS += -lasound
 OTHER_FILES += 
 DEFINES += APPLICATION_NAME=\\\"$(TARGET)\\\"
