@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Aug 28 16:37:19 2010
+** Created: Mon Aug 30 13:26:27 2010
 **      by: Qt User Interface Compiler version 4.6.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,7 +14,6 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
-#include <QtGui/QCheckBox>
 #include <QtGui/QComboBox>
 #include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
@@ -1240,7 +1239,7 @@ public:
     QGridLayout *gridLayout_4;
     QGroupBox *connections;
     QVBoxLayout *verticalLayout_2;
-    QCheckBox *con1010;
+    QRadioButton *con1010;
     QRadioButton *con0202;
     QRadioButton *condock;
     QSpinBox *conplay;
@@ -19689,7 +19688,7 @@ public:
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         connections = new QGroupBox(setupWidget);
         connections->setObjectName(QString::fromUtf8("connections"));
-        connections->setEnabled(false);
+        connections->setEnabled(true);
         QSizePolicy sizePolicy4(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy4.setHorizontalStretch(0);
         sizePolicy4.setVerticalStretch(0);
@@ -19700,9 +19699,8 @@ public:
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(-1, -1, -1, 1);
-        con1010 = new QCheckBox(connections);
+        con1010 = new QRadioButton(connections);
         con1010->setObjectName(QString::fromUtf8("con1010"));
-        con1010->setChecked(true);
 
         verticalLayout_2->addWidget(con1010);
 
@@ -19714,7 +19712,6 @@ public:
 
         condock = new QRadioButton(connections);
         condock->setObjectName(QString::fromUtf8("condock"));
-        condock->setChecked(false);
 
         verticalLayout_2->addWidget(condock);
 
@@ -19739,7 +19736,6 @@ public:
 
         groupBox_2 = new QGroupBox(setupWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setEnabled(false);
         groupBox_2->setMinimumSize(QSize(120, 0));
         gridLayout_3 = new QGridLayout(groupBox_2);
         gridLayout_3->setSpacing(4);
@@ -19938,6 +19934,19 @@ public:
         QObject::connect(pushButton_2, SIGNAL(toggled(bool)), d1padin, SLOT(setChecked(bool)));
         QObject::connect(pushButton_2, SIGNAL(toggled(bool)), d2padin, SLOT(setChecked(bool)));
         QObject::connect(pushButton_2, SIGNAL(toggled(bool)), d3padin, SLOT(setChecked(bool)));
+        QObject::connect(con1010, SIGNAL(toggled(bool)), groupBox_2, SLOT(setHidden(bool)));
+        QObject::connect(con1010, SIGNAL(toggled(bool)), groupBox, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), pushButton_2, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), adcpadin, SLOT(setVisible(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), pushButton, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), dacpad, SLOT(setVisible(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), d1padin, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), d2padin, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), d3padin, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), d1pad, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), d2pad, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), d3pad, SLOT(setHidden(bool)));
+        QObject::connect(con0202, SIGNAL(toggled(bool)), d4pad, SLOT(setHidden(bool)));
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -21152,23 +21161,23 @@ public:
         label_32->setText(QApplication::translate("MainWindow", "Channels", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("MainWindow", "Output", 0, QApplication::UnicodeUTF8));
         connections->setTitle(QApplication::translate("MainWindow", "Show:", 0, QApplication::UnicodeUTF8));
-        con1010->setText(QApplication::translate("MainWindow", "&1010 Connections", 0, QApplication::UnicodeUTF8));
-        con0202->setText(QApplication::translate("MainWindow", "0&202 Connections", 0, QApplication::UnicodeUTF8));
-        condock->setText(QApplication::translate("MainWindow", "&Dock Connections", 0, QApplication::UnicodeUTF8));
+        con1010->setText(QApplication::translate("MainWindow", "&1010 only", 0, QApplication::UnicodeUTF8));
+        con0202->setText(QApplication::translate("MainWindow", "1&212M connections", 0, QApplication::UnicodeUTF8));
+        condock->setText(QApplication::translate("MainWindow", "&Dock connections (1616M or 1820)", 0, QApplication::UnicodeUTF8));
         conplay->setSuffix(QApplication::translate("MainWindow", " ALSA Playback Connections", 0, QApplication::UnicodeUTF8));
         concapture->setSuffix(QApplication::translate("MainWindow", " ALSA Capture Connections", 0, QApplication::UnicodeUTF8));
-        groupBox_2->setTitle(QApplication::translate("MainWindow", "Input Attenuation:", 0, QApplication::UnicodeUTF8));
-        d2padin->setText(QApplication::translate("MainWindow", "Dock 2 -14dB", 0, QApplication::UnicodeUTF8));
-        d1padin->setText(QApplication::translate("MainWindow", "Dock 1 -14dB", 0, QApplication::UnicodeUTF8));
-        d3padin->setText(QApplication::translate("MainWindow", "Dock 3 -14dB", 0, QApplication::UnicodeUTF8));
-        adcpadin->setText(QApplication::translate("MainWindow", "0202 ADC -14dB", 0, QApplication::UnicodeUTF8));
+        groupBox_2->setTitle(QApplication::translate("MainWindow", "Input Attenuation (12dB):", 0, QApplication::UnicodeUTF8));
+        d2padin->setText(QApplication::translate("MainWindow", "Dock 2", 0, QApplication::UnicodeUTF8));
+        d1padin->setText(QApplication::translate("MainWindow", "Dock 1", 0, QApplication::UnicodeUTF8));
+        d3padin->setText(QApplication::translate("MainWindow", "Dock 3", 0, QApplication::UnicodeUTF8));
+        adcpadin->setText(QApplication::translate("MainWindow", "0202 ADC", 0, QApplication::UnicodeUTF8));
         pushButton_2->setText(QApplication::translate("MainWindow", "Master", 0, QApplication::UnicodeUTF8));
-        groupBox->setTitle(QApplication::translate("MainWindow", "Output Attenuation:", 0, QApplication::UnicodeUTF8));
-        d2pad->setText(QApplication::translate("MainWindow", "Dock 2 -14dB", 0, QApplication::UnicodeUTF8));
-        d1pad->setText(QApplication::translate("MainWindow", "Dock 1 -14dB", 0, QApplication::UnicodeUTF8));
-        d4pad->setText(QApplication::translate("MainWindow", "Dock 4 -14dB", 0, QApplication::UnicodeUTF8));
-        d3pad->setText(QApplication::translate("MainWindow", "Dock 3 -14dB", 0, QApplication::UnicodeUTF8));
-        dacpad->setText(QApplication::translate("MainWindow", "0202 DAC -14dB", 0, QApplication::UnicodeUTF8));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Output Attenuation (12 dB):", 0, QApplication::UnicodeUTF8));
+        d2pad->setText(QApplication::translate("MainWindow", "Dock 2", 0, QApplication::UnicodeUTF8));
+        d1pad->setText(QApplication::translate("MainWindow", "Dock 1", 0, QApplication::UnicodeUTF8));
+        d4pad->setText(QApplication::translate("MainWindow", "Dock 4", 0, QApplication::UnicodeUTF8));
+        d3pad->setText(QApplication::translate("MainWindow", "Dock 3", 0, QApplication::UnicodeUTF8));
+        dacpad->setText(QApplication::translate("MainWindow", "0202 DAC", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "Master", 0, QApplication::UnicodeUTF8));
         label_41->setText(QApplication::translate("MainWindow", "Sound Card: ", 0, QApplication::UnicodeUTF8));
         label_78->setText(QApplication::translate("MainWindow", "Clock Rate: ", 0, QApplication::UnicodeUTF8));
