@@ -27,12 +27,12 @@
   * Display channels available to jack, depending on used device
   * Display Jack port names in emutrix (?)
   * Automatize changing card clock rate settings according to jack setup
-==0.7==
+==v0.7==
   * Fix input Pads
-==0.8==
+==v0.8==
   * Nicer icons (that make sense)
   * Make matrix look nicer, easier to navigate (e.g highlight channel names on hover)
-==0.9==
+==v0.9==
   * Fancier GUI stuff (Tooltips, dB displays, etc.)
   * Level monitoring
 ==1.0==
@@ -45,5 +45,5 @@
   * Hardware level monitoring
   * Autodetect card model
 
-= Constant goals: =
+= Constant goals =
   * Document
