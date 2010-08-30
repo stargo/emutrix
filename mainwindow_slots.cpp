@@ -75,22 +75,22 @@ void MainWindow::on_d4pad_toggled(bool checked)
 // TODO The input switches don't work, but crash the app, not sure why.
 void MainWindow::on_adcpadin_toggled(bool checked)
 {
-    writeBool("DAC1 0202 14dB PAD Capture Switch", checked);
+    writeBool("ADC1 14dB PAD 0202 Capture Switch", checked);
 }
 
 void MainWindow::on_d1padin_toggled(bool checked)
 {
-    writeBool("DAC1 Audio Dock 14dB PAD Capture Switch", checked);
+    writeBool("ADC1 14dB PAD Audio Dock Capture Switch", checked);
 }
 
 void MainWindow::on_d2padin_toggled(bool checked)
 {
-    writeBool("DAC2 Audio Dock 14dB PAD Capture Switch", checked);
+    writeBool("ADC2 14dB PAD Audio Dock Capture Switch", checked);
 }
 
 void MainWindow::on_d3padin_toggled(bool checked)
 {
-    writeBool("DAC3 Audio Dock 14dB PAD Capture Switch", checked);
+    writeBool("ADC3 14dB PAD Audio Dock Capture Switch", checked);
 }
 
 ///// VIEW SIGNALS

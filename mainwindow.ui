@@ -52038,7 +52038,7 @@
        <item row="1" column="0">
         <widget class="QGroupBox" name="connections">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -52054,19 +52054,16 @@
            <number>1</number>
           </property>
           <item>
-           <widget class="QCheckBox" name="con1010">
+           <widget class="QRadioButton" name="con1010">
             <property name="text">
-             <string>&amp;1010 Connections</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
+             <string>&amp;1010 only</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QRadioButton" name="con0202">
             <property name="text">
-             <string>0&amp;202 Connections</string>
+             <string>1&amp;212M connections</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -52076,10 +52073,7 @@
           <item>
            <widget class="QRadioButton" name="condock">
             <property name="text">
-             <string>&amp;Dock Connections</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
+             <string>&amp;Dock connections (1616M or 1820)</string>
             </property>
            </widget>
           </item>
@@ -52120,9 +52114,6 @@
        </item>
        <item row="1" column="1">
         <widget class="QGroupBox" name="groupBox_2">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="minimumSize">
           <size>
            <width>120</width>
@@ -52130,7 +52121,7 @@
           </size>
          </property>
          <property name="title">
-          <string>Input Attenuation:</string>
+          <string>Input Attenuation (12dB):</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,1,1" columnstretch="1,1">
           <property name="topMargin">
@@ -52160,7 +52151,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Dock 2 -14dB</string>
+             <string>Dock 2</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52182,7 +52173,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Dock 1 -14dB</string>
+             <string>Dock 1</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52204,7 +52195,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Dock 3 -14dB</string>
+             <string>Dock 3</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52226,7 +52217,7 @@
              </size>
             </property>
             <property name="text">
-             <string>0202 ADC -14dB</string>
+             <string>0202 ADC</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52273,7 +52264,7 @@
           </size>
          </property>
          <property name="title">
-          <string>Output Attenuation:</string>
+          <string>Output Attenuation (12 dB):</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,1,1" columnstretch="1,1">
           <property name="topMargin">
@@ -52303,7 +52294,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Dock 2 -14dB</string>
+             <string>Dock 2</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52325,7 +52316,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Dock 1 -14dB</string>
+             <string>Dock 1</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52347,7 +52338,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Dock 4 -14dB</string>
+             <string>Dock 4</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52369,7 +52360,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Dock 3 -14dB</string>
+             <string>Dock 3</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52391,7 +52382,7 @@
              </size>
             </property>
             <property name="text">
-             <string>0202 DAC -14dB</string>
+             <string>0202 DAC</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -52623,8 +52614,8 @@
      <y>92</y>
     </hint>
     <hint type="destinationlabel">
-     <x>368</x>
-     <y>121</y>
+     <x>401</x>
+     <y>165</y>
     </hint>
    </hints>
   </connection>
@@ -52635,12 +52626,12 @@
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>333</x>
-     <y>88</y>
+     <x>401</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
-     <x>422</x>
-     <y>123</y>
+     <x>505</x>
+     <y>165</y>
     </hint>
    </hints>
   </connection>
@@ -52651,12 +52642,220 @@
    <slot>setChecked(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>309</x>
-     <y>80</y>
+     <x>401</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
-     <x>316</x>
-     <y>167</y>
+     <x>401</x>
+     <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con1010</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>groupBox_2</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>152</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con1010</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>groupBox</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>102</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>561</x>
+     <y>85</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pushButton_2</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>271</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>351</x>
+     <y>114</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>adcpadin</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>230</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>pushButton</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>244</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>575</x>
+     <y>103</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>dacpad</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>637</x>
+     <y>110</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>d1padin</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>148</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>d2padin</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>457</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>d3padin</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>178</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>347</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>d1pad</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>263</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>568</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>d2pad</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>651</x>
+     <y>142</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>d3pad</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>264</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>553</x>
+     <y>186</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>con0202</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>d4pad</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>640</x>
+     <y>182</y>
     </hint>
    </hints>
   </connection>
