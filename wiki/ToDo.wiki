@@ -28,7 +28,7 @@
   * Display Jack port names in emutrix (?)
   * Automatize changing card clock rate settings according to jack setup
 ==v0.7==
-  * Fix input Pads
+  * ~~Fix input Pads~~
 ==v0.8==
   * Nicer icons (that make sense)
   * Make matrix look nicer, easier to navigate (e.g highlight channel names on hover)
