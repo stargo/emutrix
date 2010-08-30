@@ -3,7 +3,8 @@
 
 #include <QtGui/QMainWindow>
 #include <QTimer>
-#include "ui_setup.h"
+#include <QButtonGroup>
+#include <QMap>
 #include "alsa/asoundlib.h"
 
 namespace Ui
