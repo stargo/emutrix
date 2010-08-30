@@ -1,6 +1,13 @@
 #labels Developers
 = Goals for versions =
+==Pre-release
+  * ~~GUI~~
+  * ~~Basic routing~~
+  * ~~Master level~~
+  * ~~Basic panic button~~
+  * ~~Output attenuation PADs~~
 ==v0.1==
+  * ~~Card selection~~
   * Read initial ALSA element values
   * Callbacks to react to outside changes
 ==v0.2==
