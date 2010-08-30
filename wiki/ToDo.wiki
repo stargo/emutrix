@@ -7,6 +7,7 @@
   * ~~Basic panic button~~
   * ~~Output attenuation PADs~~
 ==v0.1==
+  * ~~Sane/safe initial settings~~
   * ~~Card selection~~
   * Read initial ALSA element values
   * Callbacks to react to outside changes
@@ -14,20 +15,35 @@
   * "Link" feature (L and R channels go together)
   * View settings (hiding unavailable channels)
 ==v0.3==
-  * Useful panic feature (temporarely mute all channels)
+  * Useful panic feature (temporarily mute all channels)
 ==v0.4==
-  * Session managment (storage of element values) using LASH(?)
+  * Session management (storage of element values) using LASH(?)
   * Tray icon
 ==v0.5==
+  * User manual
   * Stabilizing
-
-==v0.6-v1.0==
+  * Testing with different cards
+==v0.6==
+  * Display channels available to jack, depending on used device
+  * Display Jack port names in emutrix (?)
+  * Automatize changing card clock rate settings according to jack setup
+==0.7==
   * Fix input Pads
+==0.8==
   * Nicer icons (that make sense)
+  * Make matrix look nicer, easier to navigate (e.g highlight channel names on hover)
+==0.9==
   * Fancier GUI stuff (Tooltips, dB displays, etc.)
+  * Level monitoring
+==1.0==
+  * User manual
+  * Stabilizing
+  * Testing with different cards
 ==v1.1+==
   * Multichannel routing with levels ("sends")
   * Effects
+  * Hardware level monitoring
+  * Autodetect card model
 
 = Constant goals: =
   * Document
