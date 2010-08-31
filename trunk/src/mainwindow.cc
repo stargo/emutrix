@@ -130,8 +130,9 @@ void MainWindow::matrixWriteEnum(const QString & e, int i)
 
 int MainWindow::alsaMasterChanged(snd_hctl_elem_t * elem, unsigned int mask)
 {
+    if (mask != SND_CTL_EVENT_MASK_VALUE)
+        return 0;
     qDebug("Master Volume changed outside.");
-    assert(mask == SND_CTL_EVENT_MASK_VALUE);
     MainWindow * w = (MainWindow * )snd_hctl_elem_get_callback_private(elem);
     assert(w);
     snd_hctl_elem_read(elem, w->value);
