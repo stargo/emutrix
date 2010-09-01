@@ -14,6 +14,7 @@
 ==v0.2==
   * "Link" feature (L and R channels go together)
   * View settings (hiding unavailable channels)
+  * Change names of 1010 devices to 1010/Dock if available
 ==v0.3==
   * Useful panic feature (temporarily mute all channels)
 ==v0.4==
