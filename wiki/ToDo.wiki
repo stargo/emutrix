@@ -27,7 +27,7 @@ Roadmap for future (and past version). Crossed-out entries are implemented featu
   * Stabilizing
   * Testing with different cards
 ==v0.6==
-  * Display channels available to jack, depending on used device
+  * Display channels available to jack (as alias?), depending on used device
   * Display Jack port names in emutrix (?)
   * Automatize changing card clock rate settings according to jack setup
 ==v0.7==
