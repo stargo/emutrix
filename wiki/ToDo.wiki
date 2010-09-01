@@ -28,6 +28,7 @@
   * Display Jack port names in emutrix (?)
   * Automatize changing card clock rate settings according to jack setup
 ==v0.7==
+  * External clock rate
   * ~~Fix input Pads~~
 ==v0.8==
   * Nicer icons (that make sense)
