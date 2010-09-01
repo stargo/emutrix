@@ -45,6 +45,7 @@
   * Effects
   * Hardware level monitoring
   * Autodetect card model
+  * Control dock LEDs ("lock")
 
 = Constant goals =
   * Document
