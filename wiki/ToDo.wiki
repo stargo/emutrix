@@ -1,5 +1,6 @@
 #labels Developers
 = Goals for versions =
+Roadmap for future (and past version). Crossed-out entries are implemented features. Probably subject to a lot of change, but most features are feasible up to version 1.0. Comment below or post an issue if you want a particular feature implemented.
 ==Pre-release==
   * ~~GUI~~
   * ~~Basic routing~~
@@ -16,6 +17,7 @@
   * View settings (hiding unavailable channels)
   * Change names of 1010 devices to 1010/Dock if available
 ==v0.3==
+  * Make mute toggle (clicking it again reverts to original setting)
   * Useful panic feature (temporarily mute all channels)
 ==v0.4==
   * Session management (storage of element values) using LASH(?)
@@ -42,11 +44,11 @@
   * Stabilizing
   * Testing with different cards
 ==v1.1+==
+Very speculative, may involve driver modification.
   * Multichannel routing with levels ("sends")
   * Effects
   * Hardware level monitoring
   * Autodetect card model
   * Control dock LEDs ("lock")
-
-= Constant goals =
-  * Document
+  * S/MUX for higher clock rates (88.2, 96 kHz)
+  * S/MUX for highest clock rates (176.4, 192 kHz)
