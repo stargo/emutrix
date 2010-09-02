@@ -32,22 +32,7 @@ void MainWindow::on_card_currentIndexChanged(int index)
     if (hctl)
       snd_hctl_free(hctl);
     // Initialize card
-    qDebug("Opening card...");
-    QString name = QString("hw:") + QString().number(index);
-    if (snd_hctl_open(&hctl, name.toLatin1().data(), SND_CTL_NONBLOCK))
-    {
-        showError(tr("Oops. Couldn't access sound card."));
-        return;
-    }
-    qDebug("Loading card elements...");
-    assert(!snd_hctl_load(hctl));
-    // Populate elements map to make stuff easier in the future
-    elements.clear();
-    for (snd_hctl_elem_t * el = snd_hctl_first_elem(hctl);
-      el != snd_hctl_last_elem(hctl);
-      el = snd_hctl_elem_next(el))
-        elements.insert(snd_hctl_elem_get_name(el), el);
-    qDebug() << elements.size() << " elements loaded.";
+    initCard(index);
 }
 
 void MainWindow::on_master_valueChanged(int v)

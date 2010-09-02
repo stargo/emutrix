@@ -16,6 +16,8 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QMap>
+#include <QString>
 #include <QErrorMessage>
 #include <QDebug>
 #include "sanealsa.h"
@@ -48,20 +50,6 @@ MainWindow::MainWindow(QWidget *parent)
         return;
     }
     cardsBox->setCurrentIndex(0); // Calls code to initialize first card.
-
-    qDebug("Setting start defaults...");
-    // Set "sane" values, mostly to elements not controllable from within the program
-    for (int i = 0; sanealsa_0[i] != ""; i++)
-        writeStereoInt(sanealsa_0[i], 0);
-    for (int i = 0; sanealsa_100[i] != ""; i++)
-        writeStereoInt(sanealsa_100[i], 100);
-    for (int i = 0; sanealsa_false[i] != ""; i++)
-        writeBool(sanealsa_false[i], false);
-
-    qDebug("Registering callbacks with ALSA");
-    assert(!elements.empty());
-    // Setup ALSA callbacks
-    setAlsaCallback("Master Playback Volume", (snd_hctl_elem_callback_t)&MainWindow::alsaMasterChanged);
     startTimer(0);
 }
 
@@ -83,6 +71,47 @@ void MainWindow::showError(const QString & msg)
 }
 
 //// RANDOM HELPER FUNCTIONS
+void MainWindow::initCard(int index)
+{
+    qDebug("Opening card...");
+    QString name = QString("hw:") + QString().number(index);
+    if (snd_hctl_open(&hctl, name.toLatin1().data(), SND_CTL_NONBLOCK))
+    {
+        showError(tr("Oops. Couldn't access sound card."));
+        return;
+    }
+    qDebug("Loading card elements...");
+    assert(!snd_hctl_load(hctl));
+    // Populate elements map to make stuff easier in the future
+    elements.clear();
+    for (snd_hctl_elem_t * el = snd_hctl_first_elem(hctl);
+      el != snd_hctl_last_elem(hctl);
+      el = snd_hctl_elem_next(el))
+        elements.insert(snd_hctl_elem_get_name(el), el);
+    qDebug() << elements.size() << " elements loaded. Setting start defaults...;";
+    // Set "sane" values, mostly to elements not controllable from within the program
+    for (int i = 0; sanealsa_0[i] != ""; i++)
+        writeStereoInt(sanealsa_0[i], 0);
+    for (int i = 0; sanealsa_100[i] != ""; i++)
+        writeStereoInt(sanealsa_100[i], 100);
+    for (int i = 0; sanealsa_false[i] != ""; i++)
+        writeBool(sanealsa_false[i], false);
+
+    qDebug("Registering callbacks with ALSA");
+    assert(!elements.empty());
+    // Setup ALSA callbacks for two special controls...
+    setAlsaCallback("Master Playback Volume", (snd_hctl_elem_callback_t)&MainWindow::alsaMasterChanged);
+    setAlsaCallback("Clock Internal Rate", &MainWindow::alsaRateChanged);
+    // ..and for all those pads and routing enums.
+    for (QMap<QString, snd_hctl_elem_t *>::iterator it = elements.begin();
+        it != elements.end();
+        ++it)
+        if (it.key().contains("PAD"))
+            setAlsaCallback(it.key().toLatin1().data(), &MainWindow::alsaPadChanged);
+        else if (it.key().endsWith("Enum"))
+            setAlsaCallback(it.key().toLatin1().data(), &MainWindow::alsaRoutingChanged);
+}
+
 void MainWindow::setButtonGroupVisible(const QButtonGroup *, bool)
 {
     /*for (QList<QWidget*>::iterator it = bg->buttons().begin();
@@ -144,16 +173,56 @@ void MainWindow::matrixWriteEnum(const QString & e, int i)
 
 ////// ALSA CALLBACKS
 
-int MainWindow::alsaMasterChanged(snd_hctl_elem_t * elem, unsigned int mask)
+MainWindow * MainWindow::readCallbackValue(snd_hctl_elem_t * el, unsigned int mask)
 {
     if (mask != SND_CTL_EVENT_MASK_VALUE)
-        return 0;
-    qDebug("Master Volume changed outside.");
-    MainWindow * w = (MainWindow * )snd_hctl_elem_get_callback_private(elem);
+        return NULL;
+    MainWindow * w = (MainWindow * )snd_hctl_elem_get_callback_private(el);
     assert(w);
-    snd_hctl_elem_read(elem, w->value);
+    snd_hctl_elem_read(el, w->value);
+    return w;
+}
+
+int MainWindow::alsaMasterChanged(snd_hctl_elem_t * elem, unsigned int mask)
+{
+    MainWindow * w = readCallbackValue(elem, mask);
+    if (!w)
+        return 0;
     int value = snd_ctl_elem_value_get_integer(w->value, 0);
     qDebug() << "Changed to " << value;
     w->ui->master->setValue(value);
+    return 0;
+}
+
+int MainWindow::alsaRateChanged(snd_hctl_elem_t *elem, unsigned int mask)
+{
+    MainWindow * w = readCallbackValue(elem, mask);
+    if (!w)
+        return 0;
+    int ix = snd_ctl_elem_value_get_enumerated(w->value, 0);
+    // Set Index, unless it is S/PDIF or ADAT!
+    // FIXME
+    if (ix <= w->ui->rate->count() - 1)
+        w->ui->rate->setCurrentIndex(ix);
+    return 0;
+}
+
+int MainWindow::alsaPadChanged(snd_hctl_elem_t *elem, unsigned int mask)
+{
+    MainWindow * w = readCallbackValue(elem, mask);
+    if (!w)
+        return 0;
+    bool pad = snd_ctl_elem_value_get_boolean(w->value, 0);
+    // TODO
+    return 0;
+}
+
+int MainWindow::alsaRoutingChanged(snd_hctl_elem_t *elem, unsigned int mask)
+{
+    MainWindow * w = readCallbackValue(elem, mask);
+    if (!w)
+        return 0;
+    int ix = snd_ctl_elem_value_get_enumerated(w->value, 0);
+    // TODO
     return 0;
 }
