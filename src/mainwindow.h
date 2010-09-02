@@ -86,6 +86,11 @@ private:
     /// Show or hide button groups (matrix columns), not implemented
     void setButtonGroupVisible(const QButtonGroup * bg, bool visible);
 
+    /** Intialize ALSA card.
+        Initialize card, load elements and register ALSA callbacks.
+        @param index ALSA index for card.
+    */
+    void initCard(int index);
     ///// VARIOUS ALSA WRITER FUNCTIONS
     /** Writes ALSA elements consisting of one or two integer values ("faders").
         Most elements we bother with right now are stereo, a few mono.
@@ -123,11 +128,32 @@ private:
         emutrix.
         */
     void setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb);
+    /** Read callback value.
+        Reads the changed value from element el (if mask is proper),
+        stored in value member. Returns MainWindow that changed, or NULL on
+        error.
+        */
+    static MainWindow * readCallbackValue(snd_hctl_elem_t * el, unsigned int mask);
     /** Master change.
         This callback function gets called when master playback volume changes
         @see setAlsaCallback
         */
     static int alsaMasterChanged(snd_hctl_elem_t *elem, unsigned int mask);
+    /** Clock rate change
+        This callback function gets called when ALSA "Internal Clock Rate" element changes
+        @see setAlsaCallback
+        */
+    static int alsaRateChanged(snd_hctl_elem_t *elem, unsigned int mask);
+    /** Pad change.
+        This callback function gets called when any pad changes state.
+        @see setAlsaCallback
+        */
+    static int alsaPadChanged(snd_hctl_elem_t *elem, unsigned int mask);
+    /** Routing changed
+        This callback function gets called when an ALSA routing enumeration changes value.
+        @see setAlsaCallback
+        */
+    static int alsaRoutingChanged(snd_hctl_elem_t *elem, unsigned int mask);
 
     /** Timer event
         Timer event for this class. Set to timeout when GUI stuff is idle. Updates
@@ -160,14 +186,17 @@ private slots:
     void on_panic_pressed();
 
     /// These are signaled by clicks on the matrix, each for one column (output)
+    ///  b11 - b16: Alsa capture channels
     void on_b11_buttonClicked(int);
     void on_b12_buttonClicked(int);
     void on_b13_buttonClicked(int);
     void on_b14_buttonClicked(int);
     void on_b15_buttonClicked(int);
     void on_b16_buttonClicked(int);
+    /// b0l, b0r: 0202 left & right DACs
     void on_b0l_buttonClicked(int);
     void on_b0r_buttonClicked(int);
+    /// ba0 - ba7: 1010 ADAT ouput channels
     void on_ba0_buttonClicked(int);
     void on_ba1_buttonClicked(int);
     void on_ba2_buttonClicked(int);
@@ -176,8 +205,10 @@ private slots:
     void on_ba5_buttonClicked(int);
     void on_ba6_buttonClicked(int);
     void on_ba7_buttonClicked(int);
+    /// bsl, bsr: 1010 S/PDIF left & right
     void on_bsl_buttonClicked(int);
     void on_bsr_buttonClicked(int);
+    /// b1l, b1r - b4l, b4r: Dock DACs 1-4, left & right
     void on_b1l_buttonClicked(int);
     void on_b1r_buttonClicked(int);
     void on_b2l_buttonClicked(int);
@@ -186,11 +217,12 @@ private slots:
     void on_b3r_buttonClicked(int);
     void on_b4l_buttonClicked(int);
     void on_b4r_buttonClicked(int);
+    /// bpl, bpr: Dock phones DAC, left & right
     void on_bpl_buttonClicked(int);
     void on_bpr_buttonClicked(int);
+    /// bdsl, bsdr: Dock S/PDIF outputs, left & right
     void on_bdsl_buttonClicked(int);
     void on_bdsr_buttonClicked(int);
-
 };
 
 #endif // MAINWINDOW_H
