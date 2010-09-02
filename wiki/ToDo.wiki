@@ -52,3 +52,4 @@ Very speculative, may involve driver modification.
   * Control dock LEDs ("lock")
   * S/MUX for higher clock rates (88.2, 96 kHz)
   * S/MUX for highest clock rates (176.4, 192 kHz)
+  * MIDI control
