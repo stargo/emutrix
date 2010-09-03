@@ -189,7 +189,7 @@ int MainWindow::alsaMasterChanged(snd_hctl_elem_t * elem, unsigned int mask)
     if (!w)
         return 0;
     int value = snd_ctl_elem_value_get_integer(w->value, 0);
-    qDebug() << "Changed to " << value;
+    qDebug() << "Master volume changed to " << value;
     w->ui->master->setValue(value);
     return 0;
 }
@@ -199,6 +199,7 @@ int MainWindow::alsaRateChanged(snd_hctl_elem_t *elem, unsigned int mask)
     MainWindow * w = readCallbackValue(elem, mask);
     if (!w)
         return 0;
+    qDebug("Clock rate changed.");
     int ix = snd_ctl_elem_value_get_enumerated(w->value, 0);
     // Set Index, unless it is S/PDIF or ADAT!
     // FIXME
@@ -209,11 +210,22 @@ int MainWindow::alsaRateChanged(snd_hctl_elem_t *elem, unsigned int mask)
 
 int MainWindow::alsaPadChanged(snd_hctl_elem_t *elem, unsigned int mask)
 {
+    // FIXME this dosen't work. This funcion never gets called. Why?
     MainWindow * w = readCallbackValue(elem, mask);
+    QString ename = snd_hctl_elem_get_name(elem);
+    QAbstractButton * button;
     if (!w)
         return 0;
     bool pad = snd_ctl_elem_value_get_boolean(w->value, 0);
-    // TODO
+    qDebug() << ename << " changed to " << pad;
+    if (ename == "ADC1 14dB PAD 0202 Capture Switch")
+        button = w->ui->dacpad;
+    else if (ename == "ADC1 14dB PAD Audio Dock Playback Switch")
+        button = w->ui->d1padin;
+    else
+        qDebug() << "No pad callback for element " << snd_hctl_elem_get_name(elem);
+    if (button)
+        button->setChecked(pad);
     return 0;
 }
 
@@ -222,7 +234,83 @@ int MainWindow::alsaRoutingChanged(snd_hctl_elem_t *elem, unsigned int mask)
     MainWindow * w = readCallbackValue(elem, mask);
     if (!w)
         return 0;
+    QButtonGroup * bg;
+    QString ename = snd_hctl_elem_get_name(elem);
     int ix = snd_ctl_elem_value_get_enumerated(w->value, 0);
-    // TODO
+    // Convert ALSA index to button index
+    ix = -(ix + 2);
+    qDebug() << ename << " routing changed to " << ix;
+    if (ename == "DSP A Capture Enum")
+        bg = w->ui->b11;
+    else if (ename == "DSP B Capture Enum")
+        bg = w->ui->b12;
+    else if (ename == "DSP C Capture Enum")
+        bg = w->ui->b13;
+    else if (ename == "DSP D Capture Enum")
+        bg = w->ui->b14;
+    else if (ename == "DSP E Capture Enum")
+        bg = w->ui->b15;
+    else if (ename == "DSP F Capture Enum")
+        bg = w->ui->b16;
+    else if (ename == "0202 DAC Left Playback Enum")
+        bg = w->ui->b0l;
+    else if (ename == "0202 DAC Right Playback Enum")
+        bg = w->ui->b0r;
+    else if (ename == "1010 ADAT 0 Playback Enum")
+        bg = w->ui->ba0;
+    else if (ename == "1010 ADAT 1 Playback Enum")
+        bg = w->ui->ba1;
+    else if (ename == "1010 ADAT 2 Playback Enum")
+        bg = w->ui->ba2;
+    else if (ename == "1010 ADAT 3 Playback Enum")
+        bg = w->ui->ba3;
+    else if (ename == "1010 ADAT 4 Playback Enum")
+        bg = w->ui->ba4;
+    else if (ename == "1010 ADAT 5 Playback Enum")
+        bg = w->ui->ba5;
+    else if (ename == "1010 ADAT 6 Playback Enum")
+        bg = w->ui->ba6;
+    else if (ename == "1010 ADAT 7 Playback Enum")
+        bg = w->ui->ba7;
+    else if (ename == "1010 SPDIF Left Playback Enum")
+        bg = w->ui->bsl;
+    else if (ename == "1010 SPDIF Right Playback Enum")
+        bg = w->ui->bsr;
+    else if (ename == "Dock DAC1 Left Playback Enum")
+        bg = w->ui->b1l;
+    else if (ename == "Dock DAC1 Right Playback Enum")
+        bg = w->ui->b1r;
+    else if (ename == "Dock DAC2 Left Playback Enum")
+        bg = w->ui->b2l;
+    else if (ename == "Dock DAC2 Right Playback Enum")
+        bg = w->ui->b2r;
+    else if (ename == "Dock DAC3 Left Playback Enum")
+        bg = w->ui->b3l;
+    else if (ename == "Dock DAC3 Right Playback Enum")
+        bg = w->ui->b3r;
+    else if (ename == "Dock DAC4 Left Playback Enum")
+        bg = w->ui->b4l;
+    else if (ename == "Dock DAC4 Right Playback Enum")
+        bg = w->ui->b4r;
+    else if (ename == "Dock Phones Left Playback Enum")
+        bg = w->ui->bpl;
+    else if (ename == "Dock Phones Right Playback Enum")
+        bg = w->ui->bpr;
+    else if (ename == "Dock SPDIF Left Playback Enum")
+        bg = w->ui->bdsl;
+    else if (ename == "Dock SPDIF Right Playback Enum")
+        bg = w->ui->bdsr;
+    else
+    {
+        qDebug() << "No routing callback for element " << ename;
+        return 0;
+    }
+
+    // Make sure ix does make reference to an available button
+    if (bg->button(ix))
+        bg->button(ix)->setChecked(true);
+    // or else uncheck all buttons.
+    else
+        bg->checkedButton()->setChecked(false);
     return 0;
 }
