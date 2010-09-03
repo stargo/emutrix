@@ -91,9 +91,6 @@
        </item>
        <item>
         <widget class="QToolButton" name="link">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
          <property name="toolTip">
           <string>Link Left &amp; Right Channels</string>
          </property>
