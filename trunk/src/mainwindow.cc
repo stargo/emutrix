@@ -40,7 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
     do {
         assert(!snd_card_get_name(i, &name));
         qDebug() << "Found soundcard #" << i << ": " << name;
-        if (QString(name).startsWith(QLatin1String("E-mu 1010"))) // Simple check, may not be enough to see if card is compatible
+         // Simple check, may not be enough to see if card is compatible
+        if (QString(name).startsWith(QLatin1String("E-mu 1010"))
+            || QString(name).startsWith(QLatin1String("E-mu 0404")))
             cardsBox->addItem(QString().number(i) + " - " + name, i); // I only have one card, so haven't seen if this works
     } while (snd_card_next(&i));
 
