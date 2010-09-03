@@ -1,6 +1,6 @@
 #labels Developers
 = Goals for versions =
-Roadmap for future (and past version). Crossed-out entries are implemented features. Probably subject to a lot of change, but most features are feasible up to version 1.0. Comment below or post an issue if you want a particular feature implemented.
+Roadmap for future (and past) versions. Crossed-out entries are implemented features. Probably subject to a lot of change, but most features are feasible up to version 1.0. Comment below or post an issue if you want a particular feature implemented.
 ==Pre-release==
   * ~~GUI~~
   * ~~Basic routing~~
