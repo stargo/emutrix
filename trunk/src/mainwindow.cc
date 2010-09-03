@@ -125,6 +125,13 @@ void MainWindow::timerEvent(QTimerEvent *)
     // Handle ALSA callbacks.
     if (snd_hctl_wait(hctl, 10))
         snd_hctl_handle_events(hctl);
+    // Workaround for driver bug: The driver doesn't report pad changes.
+    // Poll manually.
+    for (QMap<QString, snd_hctl_elem_t *>::iterator it = elements.begin();
+        it != elements.end();
+        ++it)
+        if (it.key().contains("PAD"))
+            alsaPadChanged(it.value(), SND_CTL_EVENT_MASK_VALUE);
 }
 
 void MainWindow::setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb)
