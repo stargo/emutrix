@@ -86,6 +86,12 @@ private:
     /// Show or hide button groups (matrix columns), not implemented
     void setButtonGroupVisible(const QButtonGroup * bg, bool visible);
 
+    /** Check linked l/r button
+      @param bg The group in which a button was clicked
+      @param linked Linked QButtonGroup
+      */
+    void checkLinked(QButtonGroup * bg, QButtonGroup * linked);
+
     /** Intialize ALSA card.
         Initialize card, load elements and register ALSA callbacks.
         @param index ALSA index for card.

@@ -232,7 +232,9 @@ int MainWindow::alsaPadChanged(snd_hctl_elem_t *elem, unsigned int mask)
     if (!w)
         return 0;
     bool pad = snd_ctl_elem_value_get_boolean(w->value, 0);
-    qDebug() << ename << " changed to " << pad;
+    // Commenting this out, too many calls to this function because of
+    // driver bug workaround polute stdout.
+    // qDebug() << ename << " changed to " << pad;
     if (ename == "ADC1 14dB PAD Audio Dock Capture Switch")
         button = w->ui->d1padin;
     else if (ename == "ADC2 14dB PAD Audio Dock Capture Switch")
