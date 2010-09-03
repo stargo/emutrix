@@ -7,7 +7,7 @@ Roadmap for future (and past version). Crossed-out entries are implemented featu
   * ~~Master level~~
   * ~~Basic panic button~~
   * ~~Output attenuation PADs~~
-==v0.1==
+==v0.1 <font color="red">current</font>==
   * ~~Sane/safe initial settings~~
   * ~~Card selection~~
   * ~~Read initial ALSA element values~~
