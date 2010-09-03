@@ -19,7 +19,8 @@
 
 /// ALSA elements to zero-out at start
 const QString sanealsa_0[] = {
-    "Master Playback Volume", //this is so that setting other faders to 100 won't blow the users ears
+    //this is so that setting other faders to 100 won't blow the users ears
+    "Master Playback Volume",
     "PCM Capture Volume",
     "Synth Playback Volume",
     "Synth Capture Volume",
@@ -35,6 +36,7 @@ const QString sanealsa_0[] = {
     "IEC958 Optical Playback Volume",
     "Analog Mix Capture Volume",
     "Analog Mix Playback Volume",
+    // Empty string needed, acts as end marker.
     ""
 };
 
@@ -50,6 +52,7 @@ const QString sanealsa_100[] = {
     "Surround Playback Volume",
     "Center Playback Volume",
     "LFE Playback Volume",
+    // Empty string needed, acts as end marker.
     ""
 };
 
@@ -57,6 +60,7 @@ const QString sanealsa_100[] = {
 const QString sanealsa_false[] = {
     "Tone Control - Switch",
     "IEC958 Optical Raw Playback Switch",
+    // Empty string needed, acts as end marker.
     ""
 };
 
