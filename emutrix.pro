@@ -16,7 +16,7 @@
  # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 TARGET = emutrix
-VERSION = 0.1
+VERSION = 0.2
 TEMPLATE = app
 SOURCES += src/main.cc \
     src/mainwindow.cc \
