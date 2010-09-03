@@ -10,8 +10,8 @@ Roadmap for future (and past version). Crossed-out entries are implemented featu
 ==v0.1==
   * ~~Sane/safe initial settings~~
   * ~~Card selection~~
-  * Read initial ALSA element values
-  * Callbacks to react to outside changes
+  * ~~Read initial ALSA element values~~
+  * ~~Callbacks to react to outside changes~~ (pads don't work yet, alsa lib or driver bug?)
 ==v0.2==
   * "Link" feature (L and R channels go together)
   * Move ALSA code to its own class
