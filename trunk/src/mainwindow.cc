@@ -99,7 +99,7 @@ void MainWindow::initCard(int index)
 
     qDebug("Registering callbacks with ALSA");
     assert(!elements.empty());
-    // Setup ALSA callbacks for two special controls...
+    // Setup ALSA callbacks for two special controls... Also sets initial values with a fake callback
     setAlsaCallback("Master Playback Volume", (snd_hctl_elem_callback_t)&MainWindow::alsaMasterChanged);
     setAlsaCallback("Clock Internal Rate", &MainWindow::alsaRateChanged);
     // ..and for all those pads and routing enums.
@@ -131,8 +131,12 @@ void MainWindow::setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb)
 {
     qDebug() << "Setting up " << eln << " callback...";
     snd_hctl_elem_t * el = elements.find(eln).value();
+    // MainWindow is passed as private to static callbacks.
     snd_hctl_elem_set_callback_private(el, this);
     snd_hctl_elem_set_callback(el, cb);
+    // Fake callback to read initial values
+    qDebug() << "Reading initial status";
+    cb(el, SND_CTL_EVENT_MASK_VALUE);
 }
 
 ///// GENERIC ALSA WRITERS
@@ -210,20 +214,37 @@ int MainWindow::alsaRateChanged(snd_hctl_elem_t *elem, unsigned int mask)
 
 int MainWindow::alsaPadChanged(snd_hctl_elem_t *elem, unsigned int mask)
 {
-    // FIXME this dosen't work. This funcion never gets called. Why?
+    // FIXME this dosen't work. Neither way: emutrix->alsamixer or
+    // alsamixer->emutrix. Function never gets called, unless
+    // explicitely. Why?
     MainWindow * w = readCallbackValue(elem, mask);
     QString ename = snd_hctl_elem_get_name(elem);
-    QAbstractButton * button;
+    QAbstractButton * button = NULL;
     if (!w)
         return 0;
     bool pad = snd_ctl_elem_value_get_boolean(w->value, 0);
     qDebug() << ename << " changed to " << pad;
-    if (ename == "ADC1 14dB PAD 0202 Capture Switch")
-        button = w->ui->dacpad;
-    else if (ename == "ADC1 14dB PAD Audio Dock Playback Switch")
+    if (ename == "ADC1 14dB PAD Audio Dock Capture Switch")
         button = w->ui->d1padin;
+    else if (ename == "ADC2 14dB PAD Audio Dock Capture Switch")
+        button = w->ui->d2padin;
+    else if (ename == "ADC3 14dB PAD Audio Dock Capture Switch")
+        button = w->ui->d3padin;
+    else if (ename == "ADC1 14dB PAD 0202 Capture Switch")
+        button = w->ui->adcpadin;
+    else if (ename == "DAC1 Audio Dock 14dB PAD Playback Switch")
+        button = w->ui->d1pad;
+    else if (ename == "DAC2 Audio Dock 14dB PAD Playback Switch")
+        button = w->ui->d2pad;
+    else if (ename == "DAC3 Audio Dock 14dB PAD Playback Switch")
+        button = w->ui->d3pad;
+    else if (ename == "DAC4 Audio Dock 14dB PAD Playback Switch")
+        button = w->ui->d4pad;
+    else if (ename == "DAC1 0202 14dB PAD Playback Switch")
+        button = w->ui->dacpad;
     else
         qDebug() << "No pad callback for element " << snd_hctl_elem_get_name(elem);
+
     if (button)
         button->setChecked(pad);
     return 0;
@@ -234,7 +255,7 @@ int MainWindow::alsaRoutingChanged(snd_hctl_elem_t *elem, unsigned int mask)
     MainWindow * w = readCallbackValue(elem, mask);
     if (!w)
         return 0;
-    QButtonGroup * bg;
+    QButtonGroup * bg = NULL;
     QString ename = snd_hctl_elem_get_name(elem);
     int ix = snd_ctl_elem_value_get_enumerated(w->value, 0);
     // Convert ALSA index to button index
