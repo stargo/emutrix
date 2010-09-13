@@ -49,4 +49,8 @@ into the console. Now you should see a new file called "emutrix". This is the pr
 
 Be aware that the sound will be muted on program start. Slowly rise the master volume fader on the left side of the window and start playing with the routing matrix in the middle. Have fun!
 
-Again, if you get errors or something doesn't work as expected don't hesitate to comment below or post to [http://groups.google.com/group/emutrix/post the EMutrix discussion group].
+Again, if you get errors or something doesn't work as expected don't hesitate to comment below or post to [http://groups.google.com/group/emutrix/post the EMutrix discussion group]. It may be helpful if you attach the output of the
+{{{
+amixer info
+}}}
+command to your message.
