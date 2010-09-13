@@ -55,7 +55,7 @@ If you are satisfied with EMutrix you can install it with the
 {{{
 sudo make install
 }}}
-command. Then you can run it by typing emutrix in the console from any folder or add a icon to your desktop manager, if you like.
+command. Then you can run it by typing emutrix in the console from any folder or add a nicon to your desktop manager, if you like.
 Remember to subscribe to the discussion group or periodically check back to see if new versions of EMutrix are out. It is still in very early stages of development.
 
 Again, if you get errors or something doesn't work as expected don't hesitate to comment below or post to [http://groups.google.com/group/emutrix/post the EMutrix discussion group]. It may be helpful if you attach the output of the
