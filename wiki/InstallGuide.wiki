@@ -10,7 +10,7 @@ Don't worry, most _recent_ versions of popular distributions come with this inst
 {{{
 amixer --version
 }}}
-in a console (or terminal) to find out if you have a compatible version of alsa: it should be at least 1.0.15, although 1.0.14 will work for older cards, too.
+in a console (or terminal) to find out if you have a compatible version of ALSA: it should be at least 1.0.15, although 1.0.14 will work for older cards, too.
 
 ==Getting the source and dependencies==
 Download the latest source package from http://code.google.com/p/emutrix/downloads/list
@@ -55,7 +55,7 @@ If you are satisfied with EMutrix you can install it with the
 {{{
 sudo make install
 }}}
-command. Then you can run it by typing emutrix in the console from any folder or add a nicon to your desktop manager, if you like.
+command. Then you can run it by typing emutrix in the console from any folder or add an icon to your desktop manager, if you like.
 Remember to subscribe to the discussion group or periodically check back to see if new versions of EMutrix are out. It is still in very early stages of development.
 
 Again, if you get errors or something doesn't work as expected don't hesitate to comment below or post to [http://groups.google.com/group/emutrix/post the EMutrix discussion group]. It may be helpful if you attach the output of the
