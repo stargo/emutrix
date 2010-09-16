@@ -1,6 +1,5 @@
+#summary from Linux Kernel Documentation: sound/alsa/emu10k1-jack.txt
 #labels Developers
-From Linux Kernel Documentation
-Original filename: sound/alsa/emu10k1-jack.txt
 
 This document is a guide to using the emu10k1 based devices with JACK for low
 latency, multichannel recording functionality.  All of my recent work to allow
