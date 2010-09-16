@@ -21,7 +21,9 @@
 #include <QTimer>
 #include <QButtonGroup>
 #include <QMap>
-#include "alsa/asoundlib.h"
+
+
+class SoundCard;
 
 namespace Ui
 {
@@ -52,31 +54,17 @@ public:
         */
     ~MainWindow();
 
-private:
     /** Contains actual UI widgets.
         It is no neccesary to interacte directly with this.
         */
-    Ui::MainWindow *ui;
-    ///// ALSA HANDLES
-    /** Handle to ALSA High level control interface.
-      Using this frees us from having to load an sort elements.
-      Also has some caching features */
-    snd_hctl_t * hctl;
-    /** String to ALSA elements map.
-        Makes accesing elements easier.
-        Each element contains info about the type of the element
-        (integer, boolean, int64, etc.), its "interface" (card, midi, timer, etc.),
-        if it is locked, etc.
-        This is loaded at start andwhenever switching cards, although it should
-        not change.
-        Several functions defined in this class allow for writing elements by QString
-        */
-    QMap<QString, snd_hctl_elem_t *> elements;
-    /** ALSA element value.
-        Reused in this class for all writes and reads.
-        Contains one or more indexed values of whatever type the element understands.
-        */
-    snd_ctl_elem_value_t * value;
+    Ui::MainWindow * ui;
+
+private:
+    /** Soundcard object.
+      Wrapper around ALSA functions. Takes care of card initialization, reading and writing.
+      Callbacks modify this window's widgets.
+      */
+    SoundCard * card;
 
     ///// GUI METHODS
     /** Displays error message popup.
@@ -91,75 +79,6 @@ private:
       @param linked Linked QButtonGroup
       */
     void checkLinked(QButtonGroup * bg, QButtonGroup * linked);
-
-    /** Intialize ALSA card.
-        Initialize card, load elements and register ALSA callbacks.
-        @param index ALSA index for card.
-    */
-    void initCard(int index);
-    ///// VARIOUS ALSA WRITER FUNCTIONS
-    /** Writes ALSA elements consisting of one or two integer values ("faders").
-        Most elements we bother with right now are stereo, a few mono.
-        This function handles both. Writes the same value to both channels.
-        @param el Element name
-        @param value Value to use for both channels
-        Calls writeValue to do actual writing.
-        */
-    void writeStereoInt(const QString & el, int value);
-    /** Toggles ALSA switches (single index)
-        AKA boolean elements.
-        @param el Element name
-        Calls writeValue to do actual writing.
-        */
-    void writeBool(const QString & el, bool);
-    /** Selects index from ALSA enumerated element
-        Selects an item from a (mono) enumeration.
-        Mostly for routing, but also used in clock rate selection.
-        @param el Element to write to
-        @i Index of enumerated selection
-        Calls writeValue to do actual writing.
-        */
-    void matrixWriteEnum(const QString & el, int i);
-    /** Does ALSA element writing
-        Writes whatever is in the value private member to ALSA.
-        @param el Element name
-        Does no sanity checks, right now.
-        */
-    void writeValue(const QString &el);
-
-    //// ALSA CALLBACKS
-    /** Set callback function for a given element
-        This function takes an element name and a function which should
-        be called each time the element value changes (Inside or outside
-        emutrix.
-        */
-    void setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb);
-    /** Read callback value.
-        Reads the changed value from element el (if mask is proper),
-        stored in value member. Returns MainWindow that changed, or NULL on
-        error.
-        */
-    static MainWindow * readCallbackValue(snd_hctl_elem_t * el, unsigned int mask);
-    /** Master change.
-        This callback function gets called when master playback volume changes
-        @see setAlsaCallback
-        */
-    static int alsaMasterChanged(snd_hctl_elem_t *elem, unsigned int mask);
-    /** Clock rate change
-        This callback function gets called when ALSA "Internal Clock Rate" element changes
-        @see setAlsaCallback
-        */
-    static int alsaRateChanged(snd_hctl_elem_t *elem, unsigned int mask);
-    /** Pad change.
-        This callback function gets called when any pad changes state.
-        @see setAlsaCallback
-        */
-    static int alsaPadChanged(snd_hctl_elem_t *elem, unsigned int mask);
-    /** Routing changed
-        This callback function gets called when an ALSA routing enumeration changes value.
-        @see setAlsaCallback
-        */
-    static int alsaRoutingChanged(snd_hctl_elem_t *elem, unsigned int mask);
 
     /** Timer event
         Timer event for this class. Set to timeout when GUI stuff is idle. Updates
