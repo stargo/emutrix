@@ -17,6 +17,8 @@
 #ifndef SANEALSA_H
 #define SANEALSA_H
 
+#include <QString>
+
 /// ALSA elements to zero-out at start
 const QString sanealsa_0[] = {
     //this is so that setting other faders to 100 won't blow the users ears
