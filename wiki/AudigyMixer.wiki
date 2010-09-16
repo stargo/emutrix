@@ -1,5 +1,5 @@
+#summary from Linux kernel Documentation: sound/alsa/Audigy-mixer.txt
 #labels Developers
-from Linux kernel Documentation: sound/alsa/Audigy-mixer.txt
 
 		
 =Sound Blaster Audigy mixer / default DSP code=
