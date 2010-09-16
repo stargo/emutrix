@@ -14,7 +14,7 @@ Roadmap for future (and past) versions. Crossed-out entries are implemented feat
   * ~~Callbacks to react to outside changes~~ ~~(pads don't work yet, alsa lib or driver bug?)~~ Works now, was a driver bug, now fixed. Implemented a workaround in the meanwhile.
 ==v0.2==
   * "Link" feature (L and R channels go together)
-  * Move ALSA code to its own class
+  * ~~Move ALSA code to its own class~~
   * View settings (hiding unavailable channels)
   * Change names of 1010 devices to 1010/Dock if available
 ==v0.3==
