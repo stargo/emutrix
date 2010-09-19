@@ -36,8 +36,7 @@ To finally compile EMutrix, simply type
 {{{
 make
 }}}
-If you get a message about a missing file "/usr/share/qt4/mkspecs/
-> linux-g++/qmake.conf", try running
+If you get a message about a missing file "/usr/share/qt4/mkspecs/linux-g++/qmake.conf", try running
 {{{
 qmake-qt4 "CONFIG+=debug"
 }}}
