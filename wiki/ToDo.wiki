@@ -17,7 +17,7 @@ Crossed-out entries are implemented features. Probably subject to a lot of chang
   * "Link" feature (L and R channels go together)
   * ~~Move ALSA code to its own class~~
   * ~~View settings (hiding unavailable channels)~~
-  * Change names of 1010 devices to 1010/Dock if available
+  * ~~Change names of 1010 devices to 1010/Dock if available~~
 ==v0.3==
   * Support for full hardware resolution fader.
   * Make mute toggle (clicking it again reverts to original setting)
