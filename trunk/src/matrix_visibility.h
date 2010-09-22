@@ -26,7 +26,7 @@ const int matrix1010rows[] = { 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, -1 };
 const int matrix0202cols[] = { 8, 9, -1 };
 const int matrix0202rows[] = { 11, 12, -1 };
 const int matrixDockCols[] = { 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, -1 };
-const int matrixDockRows[] = { 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, -1 };
+const int matrixDockRows[] = { 3, 4, 5, 6, 7, 8, 9, 10, -1 };
 const int matrix0404cols[] = { 7, 8, 17, 18, -1 };
 const int matrix0404rows[] = { 11, 12, 13, 14, -1 };
 

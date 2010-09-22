@@ -124,6 +124,16 @@ void MainWindow::on_con1010_toggled(bool checked)
 
 void MainWindow::on_condock_toggled(bool checked)
 {
+    if (checked)
+    {
+        ui->labelspdifl->setText("Dock S/PDIF L");
+        ui->labelspdifr->setText("Dock S/PDIF R");
+    }
+    else
+    {
+        ui->labelspdifl->setText("1010 S/PDIF L");
+        ui->labelspdifr->setText("1010 S/PDIF R");
+    }
     // 1010 + Dock
     if (!checked)
             return;
