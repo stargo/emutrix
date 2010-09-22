@@ -19,6 +19,7 @@
 #include <QDebug>
 #include <QSlider>
 #include "soundcard.h"
+#include "matrix_visibility.h"
 
 //// GENERAL SIGNALS
 void MainWindow::on_panic_pressed()
@@ -98,13 +99,38 @@ void MainWindow::on_d3padin_toggled(bool checked)
 }
 
 ///// VIEW SIGNALS
-//TODO Hide unnecessary channels when user clicks on the appropiate checkboxes
+//Hide unnecessary channels when user clicks on the appropiate checkboxes
 void MainWindow::on_con0202_toggled(bool checked)
 {
-   /* QList<QButtonGroup*> cols = this->findChildren<QButtonGroup*>(QRegExp("b0[r,l]"));
-    for (QList<QButtonGroup*>::iterator it = cols.begin();
-        it != cols.end(); ++it)
-        setButtonGroupVisible(*it, checked);*/
+    // actually not 0202, but 1212
+    if (!checked)
+            return;
+    // 1010 is always visible
+    // matrixSetVisible(matrix1010rows, matrix1010cols, true);
+    matrixSetVisible(matrix0202rows, matrix0202cols, true);
+    matrixSetVisible(matrixDockRows, matrixDockCols, false);
+}
+
+void MainWindow::on_con1010_toggled(bool checked)
+{
+    // 1010 only
+    if (!checked)
+            return;
+    // 1010 is always visible
+    // matrixSetVisible(matrix1010rows, matrix1010cols, true);
+    matrixSetVisible(matrixDockRows, matrixDockCols, false);
+    matrixSetVisible(matrix0202rows, matrix0202cols, false);
+}
+
+void MainWindow::on_condock_toggled(bool checked)
+{
+    // 1010 + Dock
+    if (!checked)
+            return;
+    // 1010 is always visible
+    // matrixSetVisible(matrix1010rows, matrix1010cols, true);
+    matrixSetVisible(matrixDockRows, matrixDockCols, true);
+    matrixSetVisible(matrix0202rows, matrix0202cols, false);
 }
 
 /////// MATRIX SIGNALS

@@ -20,7 +20,8 @@ SOURCES += src/main.cc \
     src/soundcard.cc
 HEADERS += src/sanealsa.h \
     src/mainwindow.h \
-    src/soundcard.h
+    src/soundcard.h \
+    src/matrix_visibility.h
 FORMS += res/mainwindow.ui
 RESOURCES += res/emutrix.qrc
 LIBS += -lasound

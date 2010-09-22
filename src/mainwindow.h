@@ -71,9 +71,8 @@ private:
         @param msg Message to display.
     */
     void showError(const QString & msg);
-    /// Show or hide button groups (matrix columns), not implemented
-    void setButtonGroupVisible(const QButtonGroup * bg, bool visible);
-
+    /// Show or hide button groups (matrix columns & rows)
+    void matrixSetVisible(const int rows[], const int cols[], bool visible);
     /** Check linked l/r button
       @param bg The group in which a button was clicked
       @param linked Linked QButtonGroup
@@ -88,8 +87,11 @@ private:
     void timerEvent(QTimerEvent *);
 
 private slots:
-    /// Should set visible connectors
+    /// Set visible connectors and matrix boxes
     void on_con0202_toggled(bool checked);
+    void on_con1010_toggled(bool checked);
+    void on_condock_toggled(bool checked);
+
     /// Signaled by pad togglebuttons
     void on_dacpad_toggled(bool checked);
     void on_d1pad_toggled(bool checked);

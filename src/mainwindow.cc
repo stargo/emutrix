@@ -63,13 +63,29 @@ void MainWindow::showError(const QString & msg)
 }
 
 
-void MainWindow::setButtonGroupVisible(const QButtonGroup *, bool)
+void MainWindow::matrixSetVisible(const int rows[], const int cols[], bool visible)
 {
-    /*for (QList<QWidget*>::iterator it = bg->buttons().begin();
-        it != bg->buttons().end(); ++it)
-        (*it)->setVisible(visible);*/
+    QGridLayout * matrix = (QGridLayout *)ui->matrixContents->layout();
+    int i, j;
+    for (i = 0; rows[i] != -1; i++)
+        for (j = 0; j < matrix->columnCount(); j++)
+        {
+            QLayoutItem * li = matrix->itemAtPosition(rows[i], j);
+            // Some positions are empty, because there are spanning labels
+            if (!li)
+                continue;
+            li->widget()->setVisible(visible);
+        }
+    for (j = 0; cols[j] != -1; j++)
+    for (i = 0; i < matrix->rowCount(); i++)
+        {
+            QLayoutItem * li = matrix->itemAtPosition(i, cols[j]);
+            // Some positions are empty, because there are spanning labels
+            if (!li)
+                continue;
+            li->widget()->setVisible(visible);
+        }
 }
-
 
 //// HELPER FUNCTIONS
 
