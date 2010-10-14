@@ -18,6 +18,7 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QSlider>
+#include <QComboBox>
 #include "soundcard.h"
 #include "matrix_visibility.h"
 
@@ -30,13 +31,14 @@ void MainWindow::on_panic_pressed()
 
 void MainWindow::on_card_currentIndexChanged(int index)
 {
-    qDebug() << "Selecting card #" << index;
+    int aix = findChild<QComboBox*>("card")->itemData(index).toInt();
+    qDebug() << "Selecting card #" << aix;
     // ALSA control handles
     if (card)
       delete card;
     // Initialize card .. TODO ALSA index isn't necessarly equal to cb index, if
     // user has non-emu cards!
-    card = new SoundCard(index);
+    card = new SoundCard(aix);
     card->setupCallbacks(this);
 }
 

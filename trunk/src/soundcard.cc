@@ -20,9 +20,10 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 
-QList<QString> SoundCard::getCardList()
+QList<QPair<QString, int> > SoundCard::getCardList()
 {
-    QList<QString> list;
+
+    QList<QPair<QString, int> > list;
 
     // Look for soundcards
     qDebug("Checking soundcards...");
@@ -34,7 +35,7 @@ QList<QString> SoundCard::getCardList()
          // Simple check, may not be enough to see if card is compatible
         if (QString(name).startsWith(QLatin1String("E-mu 1010"))
             || QString(name).startsWith(QLatin1String("E-mu 0404")))
-            list.append(name); // I only have one card, so haven't seen if this works
+            list.append(QPair<QString, int>(name, i)); // I only have one card, so haven't seen if this works
     } while (snd_card_next(&i));
 
     return list;
