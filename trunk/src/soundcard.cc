@@ -129,7 +129,7 @@ void SoundCard::setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb)
 ///// GENERIC ALSA WRITERS
 void SoundCard::writeValue(const QString &el)
 {
-        qDebug() << "Writing to "<< el << " ALSA element.";
+        //qDebug() << "Writing to "<< el << " ALSA element.";
         assert(elements.contains(el));
         assert(snd_hctl_elem_write(elements.find(el).value(), value) >= 0);
 }
