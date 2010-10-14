@@ -37,7 +37,7 @@ void MainWindow::on_card_currentIndexChanged(int index)
     if (card)
       delete card;
     // Initialize card .. TODO ALSA index isn't necessarly equal to cb index, if
-    // user has non-emu cards!
+    // user has non-emu cards! fixed -- works now?
     card = new SoundCard(aix);
     card->setupCallbacks(this);
 }
