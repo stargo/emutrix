@@ -46,10 +46,10 @@ public:
     */
     void setupCallbacks(MainWindow * w);
 
-    /** Returns a list of card names.
+    /** Returns a list of card names & ALSA indices
       Ordered acording to ALSA index
       */
-    static QList<QString> getCardList();
+    static QList<QPair<QString, int> > getCardList();
 
     QString getName();
 

@@ -31,11 +31,11 @@ MainWindow::MainWindow(QWidget *parent)
     // Hide "setup" (that is, extended settings, frame)
     this->findChild<QWidget*>("setupWidget")->setVisible(false);
 
-    QList<QString> cards = SoundCard::getCardList();
-    for (QList<QString>::iterator it = cards.begin();
+    QList<QPair<QString, int> > cards = SoundCard::getCardList();
+    for (QList<QPair<QString, int> >::iterator it = cards.begin();
         it != cards.end();
         ++it)
-        cardsBox->addItem(*it);
+        cardsBox->addItem(it->first, it->second);
 
     if (cardsBox->count() == 0)
     {
