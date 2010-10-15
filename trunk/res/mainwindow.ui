@@ -52310,6 +52310,9 @@
           </item>
           <item>
            <widget class="QSpinBox" name="conplay">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="suffix">
              <string> ALSA Playback Connections</string>
             </property>
@@ -52326,6 +52329,9 @@
           </item>
           <item>
            <widget class="QSpinBox" name="concapture">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="suffix">
              <string> ALSA Capture Connections</string>
             </property>
