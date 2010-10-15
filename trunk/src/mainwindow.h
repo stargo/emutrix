@@ -77,7 +77,7 @@ private:
       @param bg The group in which a button was clicked
       @param linked Linked QButtonGroup
       */
-    void checkLinked(QButtonGroup * bg, QButtonGroup * linked);
+    void checkLinked(QButtonGroup * bg, QButtonGroup * linked, QButtonGroup * linkedr = NULL);
 
     /** Timer event
         Timer event for this class. Set to timeout when GUI stuff is idle. Updates

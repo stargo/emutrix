@@ -94,23 +94,30 @@ void MainWindow::timerEvent(QTimerEvent *)
     card->updateCallbacks();
 }
 
-void MainWindow::checkLinked(QButtonGroup * bg, QButtonGroup * linked)
+void MainWindow::checkLinked(QButtonGroup * bg, QButtonGroup * linked, QButtonGroup * linkedr)
 {
+    // L-R link enabled?
     if (!ui->link->isChecked())
         return;
     int ix = bg->checkedId();
+
     if (ix == -2);
-    else if (linked->objectName().endsWith('l'))
+    else if (linked && linked->objectName().endsWith('l'))
         ix++;
-    else if(linked->objectName().endsWith('r'))
+    else if(linked && linked->objectName().endsWith('r'))
         ix--;
-    /// TODO make this work for input channels.
-    /*else if (-ix >= 5 && -ix <= 14 && ix % 2 == 0) // checked an even id => right channel
+    /// make this work for input channels. -- not quite sure if this is the right behavior
+    else if (-ix >= 5 && -ix <= 14 && -ix % 2 == 0) // checked an even id => right channel
+    {
         ix++; // change left
-    else if (-ix >= 5 && -ix <= 14 && ix % 2 == 1) // checked an odd id => left channel
+        linked = linkedr;
+    }
+    else if (-ix >= 5 && -ix <= 14 && -ix % 2 == 1) // checked an odd id => left channel
         ix--; // change right
-        */
     else
+        return;
+
+    if (!linked)
         return;
     if (linked->checkedId() != ix)
         // Using click() because it fires the appropiate signals

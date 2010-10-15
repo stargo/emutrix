@@ -185,7 +185,7 @@ int SoundCard::alsaMasterChanged(snd_hctl_elem_t * elem, unsigned int mask)
     if (!c)
         return 0;
     int value = snd_ctl_elem_value_get_integer(c->value, 0);
-    qDebug() << "Master volume changed to " << value;
+   // qDebug() << "Master volume changed to " << value;
     c->window->ui->master->setValue(value);
     return 0;
 }
