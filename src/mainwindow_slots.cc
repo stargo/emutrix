@@ -153,31 +153,37 @@ void MainWindow::on_condock_toggled(bool checked)
 void MainWindow::on_b11_buttonClicked(int i)
 {
     card->matrixWriteEnum("DSP A Capture Enum", i);
+    checkLinked(ui->b11, ui->b12);
 }
 
 void MainWindow::on_b12_buttonClicked(int i)
 {
     card->matrixWriteEnum("DSP B Capture Enum", i);
+    checkLinked(ui->b12, ui->b13, ui->b11);
 }
 
 void MainWindow::on_b13_buttonClicked(int i)
 {
     card->matrixWriteEnum("DSP C Capture Enum", i);
+    checkLinked(ui->b13, ui->b14, ui->b12);
 }
 
 void MainWindow::on_b14_buttonClicked(int i)
 {
     card->matrixWriteEnum("DSP D Capture Enum", i);
+    checkLinked(ui->b14, ui->b15, ui->b13);
 }
 
 void MainWindow::on_b15_buttonClicked(int i)
 {
     card->matrixWriteEnum("DSP E Capture Enum", i);
+    checkLinked(ui->b15, ui->b16, ui->b14);
 }
 
 void MainWindow::on_b16_buttonClicked(int i)
 {
     card->matrixWriteEnum("DSP F Capture Enum", i);
+    checkLinked(ui->b16, NULL, ui->b15);
 }
 
 void MainWindow::on_b0l_buttonClicked(int i)
@@ -195,41 +201,49 @@ void MainWindow::on_b0r_buttonClicked(int i)
 void MainWindow::on_ba0_buttonClicked(int i)
 {
     card->matrixWriteEnum("1010 ADAT 0 Playback Enum", i);
+    checkLinked(ui->ba0, ui->ba1);
 }
 
 void MainWindow::on_ba1_buttonClicked(int i)
 {
     card->matrixWriteEnum("1010 ADAT 1 Playback Enum", i);
+    checkLinked(ui->ba1, ui->ba2, ui->ba0);
 }
 
 void MainWindow::on_ba2_buttonClicked(int i)
 {
     card->matrixWriteEnum("1010 ADAT 2 Playback Enum", i);
+    checkLinked(ui->ba2, ui->ba3, ui->ba1);
 }
 
 void MainWindow::on_ba3_buttonClicked(int i)
 {
     card->matrixWriteEnum("1010 ADAT 3 Playback Enum", i);
+    checkLinked(ui->ba3, ui->ba4, ui->ba2);
 }
 
 void MainWindow::on_ba4_buttonClicked(int i)
 {
     card->matrixWriteEnum("1010 ADAT 4 Playback Enum", i);
+    checkLinked(ui->ba4, ui->ba5, ui->ba3);
 }
 
 void MainWindow::on_ba5_buttonClicked(int i)
 {
     card->matrixWriteEnum("1010 ADAT 5 Playback Enum", i);
+    checkLinked(ui->ba5, ui->ba6, ui->ba4);
 }
 
 void MainWindow::on_ba6_buttonClicked(int i)
 {
     card->matrixWriteEnum("1010 ADAT 6 Playback Enum", i);
+    checkLinked(ui->ba6, ui->ba7, ui->ba5);
 }
 
 void MainWindow::on_ba7_buttonClicked(int i)
 {
     card->matrixWriteEnum("1010 ADAT 7 Playback Enum", i);
+    checkLinked(ui->ba7, NULL, ui->ba6);
 }
 
 void MainWindow::on_bsl_buttonClicked(int i)
