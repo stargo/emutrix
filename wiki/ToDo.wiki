@@ -8,17 +8,18 @@ Crossed-out entries are implemented features. Probably subject to a lot of chang
   * ~~Master level~~
   * ~~Basic panic button~~
   * ~~Output attenuation PADs~~
-==v0.1 <font color="red">current</font>==
+==v0.1==
   * ~~Sane/safe initial settings~~
   * ~~Card selection~~
   * ~~Read initial ALSA element values~~
-  * ~~Callbacks to react to outside changes~~ ~~(pads don't work yet, alsa lib or driver bug?)~~ Works now, was a driver bug, now fixed. Implemented a workaround in the meanwhile.
-==v0.2 <font color="green">in svn</font>==
-  * "Link" feature (L and R channels go together)
+  * ~~Callbacks to react to outside changes~~ ~~(pads don't work yet, alsa lib or driver bug?)~~
+Works now, was a driver bug, now fixed. Implemented a workaround in the meanwhile.
+==v0.2 <font color="red">current</font>==
+  * ~~"Link" feature (L and R channels go together)~~
   * ~~Move ALSA code to its own class~~
   * ~~View settings (hiding unavailable channels)~~
   * ~~Change names of 1010 devices to 1010/Dock if available~~
-==v0.3==
+==v0.3 <font color="green">in svn</font>==
   * Support for full hardware resolution fader.
   * Make mute toggle (clicking it again reverts to original setting)
   * Useful panic feature (temporarily mute all channels)
