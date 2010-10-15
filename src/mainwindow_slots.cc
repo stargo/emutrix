@@ -329,3 +329,13 @@ void MainWindow::on_bdsr_buttonClicked(int i)
     card->matrixWriteEnum("Dock SPDIF Right Playback Enum", i);
     checkLinked(ui->bdsr, ui->bdsl);
 }
+
+void MainWindow::on_conplay_valueChanged(int)
+{
+
+}
+
+void MainWindow::on_concapture_valueChanged(int)
+{
+
+}

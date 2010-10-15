@@ -88,6 +88,8 @@ private:
 
 private slots:
     /// Set visible connectors and matrix boxes
+    void on_concapture_valueChanged(int);
+    void on_conplay_valueChanged(int);
     void on_con0202_toggled(bool checked);
     void on_con1010_toggled(bool checked);
     void on_condock_toggled(bool checked);
