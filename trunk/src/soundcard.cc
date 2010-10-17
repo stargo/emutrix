@@ -36,7 +36,8 @@ QList<QPair<QString, int> > SoundCard::getCardList()
         if (QString(name).startsWith(QLatin1String("E-mu 1010"))
             || QString(name).startsWith(QLatin1String("E-mu 0404")))
             list.append(QPair<QString, int>(name, i)); // I only have one card, so haven't seen if this works
-    } while (snd_card_next(&i));
+        snd_card_next(&i) // hendryx pointed out a bug with the previous implementation, hope this works
+    } while (i >= 0);
 
     return list;
 }
