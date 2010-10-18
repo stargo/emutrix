@@ -54,6 +54,11 @@ public:
         */
     ~MainWindow();
 
+    /** Displays error message popup.
+        @param msg Message to display.
+    */
+    void showError(const QString & msg);
+
     /** Contains actual UI widgets.
         It is no neccesary to interacte directly with this.
         */
@@ -67,10 +72,6 @@ private:
     SoundCard * card;
 
     ///// GUI METHODS
-    /** Displays error message popup.
-        @param msg Message to display.
-    */
-    void showError(const QString & msg);
     /// Show or hide button groups (matrix columns & rows)
     void matrixSetVisible(const int rows[], const int cols[], bool visible);
     /** Check linked l/r button
