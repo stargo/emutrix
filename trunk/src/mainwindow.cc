@@ -31,16 +31,23 @@ MainWindow::MainWindow(QWidget *parent)
     // Hide "setup" (that is, extended settings, frame)
     this->findChild<QWidget*>("setupWidget")->setVisible(false);
 
-    QList<QPair<QString, int> > cards = SoundCard::getCardList();
-    for (QList<QPair<QString, int> >::iterator it = cards.begin();
-        it != cards.end();
-        ++it)
-        cardsBox->addItem(it->first, it->second);
-
-    if (cardsBox->count() == 0)
+    try
     {
-        showError(tr("Sorry! No EMU 1010 based cards found."));
-        return;
+        QList<QPair<QString, int> > cards = SoundCard::getCardList();
+        for (QList<QPair<QString, int> >::iterator it = cards.begin();
+            it != cards.end();
+            ++it)
+            cardsBox->addItem(it->first, it->second);
+
+        if (cardsBox->count() == 0)
+        {
+            throw tr("Sorry! No EMU 1010 based cards found.");
+            return;
+        }
+    }
+    catch (QString err)
+    {
+        showError(err);
     }
     cardsBox->setCurrentIndex(0); // Calls code to initialize first card.
     startTimer(0);
