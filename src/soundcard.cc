@@ -125,13 +125,13 @@ void SoundCard::updateCallbacks()
 
 void SoundCard::setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb)
 {
-    qDebug() << "Setting up " << eln << " callback...";
+  //  qDebug() << "Setting up " << eln << " callback...";
     snd_hctl_elem_t * el = elements.find(eln).value();
     // SoundCard is passed as private to static callbacks.
     snd_hctl_elem_set_callback_private(el, this);
     snd_hctl_elem_set_callback(el, cb);
     // Fake callback to read initial values
-    qDebug() << "Reading initial status";
+   // qDebug() << "Reading initial status";
     cb(el, SND_CTL_EVENT_MASK_VALUE);
 }
 
@@ -149,7 +149,7 @@ void SoundCard::writeStereoInt(const QString & el, int v)
     and of course all those pesky Multichannel Routing/Volume thingies, with witch we don't bother right now. Mono faders
     work with this, too. */
     //TODO check if the element is the right type
-    qDebug() << "Going to write stereo faders " << el << " to " << v;
+    qDebug() << "Stereo faders " << el << " to " << v;
     snd_ctl_elem_value_set_integer(value, 0, v);
     snd_ctl_elem_value_set_integer(value, 1, v);
     writeValue(el);
@@ -265,7 +265,7 @@ int SoundCard::alsaRoutingChanged(snd_hctl_elem_t *elem, unsigned int mask)
     int ix = snd_ctl_elem_value_get_enumerated(c->value, 0);
     // Convert ALSA index to button index
     ix = -(ix + 2);
-    qDebug() << ename << " routing changed to " << ix;
+    qDebug() << ename << " routing to " << ix;
     if (ename == "DSP A Capture Enum")
         bg = w->ui->b11;
     else if (ename == "DSP B Capture Enum")
