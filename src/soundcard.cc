@@ -19,6 +19,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QString>
+
+/// call ALSA function or die trying.
+void tryAlsa(int err)
+{
+    if (err)
+        throw QString("ALSA Error: ") + snd_strerror(err);
+}
 
 QList<QPair<QString, int> > SoundCard::getCardList()
 {
@@ -30,13 +38,13 @@ QList<QPair<QString, int> > SoundCard::getCardList()
     int i = 0;
     char * name;
     do {
-        assert(!snd_card_get_name(i, &name));
+        tryAlsa(snd_card_get_name(i, &name));
         qDebug() << "Found soundcard #" << i << ": " << name;
          // Simple check, may not be enough to see if card is compatible
         if (QString(name).startsWith(QLatin1String("E-mu 1010"))
             || QString(name).startsWith(QLatin1String("E-mu 0404")))
             list.append(QPair<QString, int>(name, i)); // I only have one card, so haven't seen if this works
-        snd_card_next(&i) // hendryx pointed out a bug with the previous implementation, hope this works
+        tryAlsa(snd_card_next(&i)); // hendryx pointed out a bug with the previous implementation, hope this works
     } while (i >= 0);
 
     return list;
@@ -45,13 +53,13 @@ QList<QPair<QString, int> > SoundCard::getCardList()
 SoundCard::SoundCard(int index) : index(index), hctl(NULL), window(NULL)
 {
     // Create a new element_value object, use thorugh this class to write to ALSA mixer
-    assert(!snd_ctl_elem_value_malloc(&value));
+    tryAlsa(snd_ctl_elem_value_malloc(&value));
     qDebug("Opening card...");
     QString name = QString("hw:") + QString().number(index);
     if (snd_hctl_open(&hctl, name.toLatin1().data(), SND_CTL_NONBLOCK))
         throw "Oops. Couldn't access sound card.";
     qDebug("Loading card elements...");
-    assert(!snd_hctl_load(hctl));
+    tryAlsa(snd_hctl_load(hctl));
     // Populate elements map to make stuff easier in the future
     elements.clear();
     for (snd_hctl_elem_t * el = snd_hctl_first_elem(hctl);
@@ -176,7 +184,7 @@ SoundCard * SoundCard::readCallbackValue(snd_hctl_elem_t * el, unsigned int mask
         return NULL;
     SoundCard * c = (SoundCard * )snd_hctl_elem_get_callback_private(el);
     assert(c);
-    snd_hctl_elem_read(el, c->value);
+    tryAlsa(snd_hctl_elem_read(el, c->value));
     return c;
 }
 

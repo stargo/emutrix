@@ -24,6 +24,14 @@ int main(int argc, char *argv[])
     a.setApplicationName(APPLICATION_NAME);
     qDebug() << "Starting " << APPLICATION_NAME << "...";
     MainWindow w;
-    w.show();
-    return a.exec();
+    try
+    {
+        w.show();
+        return a.exec();
+    }
+    catch(QString err) // catch fatal errors
+    {
+        w.showError(err);
+        a.quit();
+    }
 }
