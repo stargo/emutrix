@@ -38,7 +38,7 @@ QList<QPair<QString, int> > SoundCard::getCardList()
     int i = 0;
     char * name;
     do {
-        tryAlsa(snd_card_get_name(i, &name));
+        snd_card_get_name(i, &name);
         qDebug() << "Found soundcard #" << i << ": " << name;
          // Simple check, may not be enough to see if card is compatible
         if (QString(name).startsWith(QLatin1String("E-mu 1010"))
