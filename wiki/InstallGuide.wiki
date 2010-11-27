@@ -3,6 +3,8 @@
 If you know your way around with linux, EMutrix should be fairly easy to install, but
 if you are new to Linux, this is a step-by-step guide to install EMutrix from source.
 
+Also, see [http://groups.google.com/group/emutrix/browse_thread/thread/8294e88ef6d45076 this post]. Specially if you are on OpenSUSE
+
 ==Prerequisites==
 Besides the compatible soundcard, you will need a working linux installation, with ALSA (Advanced Linux Sound Architecture) drivers for E-mu cards installed.
 
