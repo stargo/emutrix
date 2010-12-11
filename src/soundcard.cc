@@ -139,8 +139,10 @@ void SoundCard::setAlsaCallback(const char * eln, snd_hctl_elem_callback_t cb)
 void SoundCard::writeValue(const QString &el)
 {
         //qDebug() << "Writing to "<< el << " ALSA element.";
-        assert(elements.contains(el));
-        assert(snd_hctl_elem_write(elements.find(el).value(), value) >= 0);
+        if (elements.contains(el))
+            assert(snd_hctl_elem_write(elements.find(el).value(), value) >= 0);
+        else
+            qDebug() << "Warning: Element " << el << " not available!";
 }
 
 void SoundCard::writeStereoInt(const QString & el, int v)
@@ -149,7 +151,7 @@ void SoundCard::writeStereoInt(const QString & el, int v)
     and of course all those pesky Multichannel Routing/Volume thingies, with witch we don't bother right now. Mono faders
     work with this, too. */
     //TODO check if the element is the right type
-    qDebug() << "Stereo faders " << el << " to " << v;
+    //qDebug() << "Stereo faders " << el << " to " << v;
     snd_ctl_elem_value_set_integer(value, 0, v);
     snd_ctl_elem_value_set_integer(value, 1, v);
     writeValue(el);
